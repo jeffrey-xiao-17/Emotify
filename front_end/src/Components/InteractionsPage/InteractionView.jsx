@@ -7,7 +7,7 @@ import ResponseHistory from "./ResponseHistory";
 import TextInput from "./TextInput";
 import ChatBot from "./ChatBot";
 
-class View extends Component {
+class InteractionView extends Component {
   render() {
     return (
       <div className={styles.full}>
@@ -28,4 +28,4 @@ class View extends Component {
   }
 }
 
-export default View;
+export default InteractionView;

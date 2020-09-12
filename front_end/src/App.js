@@ -7,12 +7,18 @@ import Nav from "./Nav";
 
 // Components
 import InteractionView from "./Components/InteractionsPage/InteractionView";
+import ResultsView from "./Components/ResultsPage/ResultsView";
+import HistoryView from "./Components/HistoryPage/HistoryView";
 
 function App() {
   return (
     <Router>
       <Nav />
-      <Route path="/" exact component={InteractionView} />
+      <Switch>
+        <Route path="/" exact component={InteractionView} />
+        <Route path="/results" component={ResultsView} />
+        <Route path="/history" component={HistoryView} />
+      </Switch>
     </Router>
   );
 }
