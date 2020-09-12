@@ -1,11 +1,27 @@
-function PrivateRoute ({component: Component, authed, ...rest}) {
+import {Redirect, Route} from 'react-router-dom'
+import React from 'react'
+
+function PrivateRoute ({component: Component, pathname, authed, render=null}) {
+  if (!authed) {
+    return <Redirect to="/"/>
+  }
+
+  // if (render==null){
+  //   return (
+  //     <Route
+  //       render={() => <Component/>}
+  //       path={pathname}
+  //     />
+  //   )
+  // }
+  else {
     return (
       <Route
-        {...rest}
-        render={(props) => authed === true
-          ? <Component {...props} />
-          : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+        path={pathname}
+        render={render}
+        component={Component}
       />
     )
   }
+}
   export default PrivateRoute

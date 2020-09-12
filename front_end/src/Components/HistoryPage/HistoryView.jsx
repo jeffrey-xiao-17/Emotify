@@ -5,6 +5,8 @@ import HistoryCell from "./components/HistoryCell";
 import { Message, Card } from "semantic-ui-react";
 
 function HistoryView() {
+
+
   const tempData = [
     {
       date: "October 12, 2020",
