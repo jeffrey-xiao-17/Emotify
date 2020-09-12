@@ -1,6 +1,6 @@
 .center {
-  text-align: center;
   margin: auto;
   height: 100vh;
   margin: auto;
+  overflow: hidden;
 }

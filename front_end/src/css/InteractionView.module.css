@@ -1,0 +1,31 @@
+.bottom {
+  position: absolute;
+  top: 85vh;
+  width: 75%;
+  margin: auto;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.settings {
+  z-index: 1;
+  position: relative;
+  top: 25px;
+  left: 25px;
+}
+
+.full {
+  height: 100%;
+}
+
+.right {
+  text-align: right;
+}
