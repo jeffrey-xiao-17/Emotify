@@ -52,8 +52,6 @@ function HistoryView() {
           ))}
         </Card.Group>
       </Message>
-            
-      <div className={styles.historyList}>               </div>
                  
     </div>
   );

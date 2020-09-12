@@ -40,3 +40,47 @@ class ChatBot extends Component {
 }
 
 export default ChatBot;
+const EYE_OPTIONS = [
+  "Close",
+  "Cry",
+  "Default",
+  // "Dizzy",
+  "EyeRoll",
+  "Happy",
+  "Hearts",
+  "Side",
+  "Squint",
+  "Surprised",
+  "Wink",
+  "WinkWacky",
+];
+
+const EYEBROW_OPTIONS = [
+  "Angry",
+  "AngryNatural",
+  "Default",
+  "DefaultNatural",
+  "FlatNatural",
+  "RaisedExcited",
+  "RaisedExcitedNatural",
+  "SadConcerned",
+  "SadConcernedNatural",
+  "UnibrowNatural",
+  "UpDown",
+  "UpDownNatural",
+];
+
+const MOUTH_OPTIONS = [
+  "Concerned",
+  "Default",
+  "Disbelief",
+  "Eating",
+  "Grimace",
+  "Sad",
+  "ScreamOpen",
+  "Serious",
+  "Smile",
+  "Tongue",
+  "Twinkle",
+  "Vomit",
+];

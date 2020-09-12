@@ -5,8 +5,13 @@ import cx from "classnames";
 import ChatBot from "./ChatBot";
 import { ChatFeed } from "react-bell-chat";
 import update from "immutability-helper";
+import { Button } from "semantic-ui-react";
+import { uniqueNamesGenerator, names } from "unique-names-generator";
 
 class InteractionView extends Component {
+  static config = {
+    dictionaries: [names],
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -21,14 +26,21 @@ class InteractionView extends Component {
         },
         {
           id: 2,
-          name: "Bot",
+          name: uniqueNamesGenerator(InteractionView.config),
           isTyping: false,
         },
       ],
       idCount: 1,
       inputDisabled: false,
     };
-    console.log(this.generatedBotProps);
+    this.myRef = React.createRef();
+    this.focus = this.focus.bind(this);
+  }
+
+  focus() {
+    // Explicitly focus the text input using the raw DOM API
+    // Note: we're accessing "current" to get the DOM node
+    this.myRef.current.focus();
   }
 
   onTodoChange(value) {
@@ -56,6 +68,7 @@ class InteractionView extends Component {
         ],
       });
       this.botResponse(this.state.idCount - 1);
+      this.focus();
     }
   }
 
@@ -80,7 +93,7 @@ class InteractionView extends Component {
           ...this.state.messages,
           {
             authorId: 2,
-            message: "SAMPLE BOT MESSAGE",
+            message: this.generateBotMessage(this.state.message),
             createdOn: new Date(),
             isSend: true,
           },
@@ -88,6 +101,10 @@ class InteractionView extends Component {
         inputDisabled: false,
       });
     }, 3000);
+  }
+
+  generateBotMessage(message) {
+    return "SAMPLE BOT MESSAGE";
   }
 
   render() {
@@ -114,6 +131,7 @@ class InteractionView extends Component {
             >
               <div className={cx("ui focus input", styles.textfield)}>
                 <input
+                  ref={this.myRef}
                   type="text"
                   disabled={this.state.inputDisabled}
                   placeholder="Enter your message here."
@@ -130,6 +148,9 @@ class InteractionView extends Component {
                   Send
                 </button>
               </div>
+              <Button positive className={styles.newButton}>
+                Meet Someone New!
+              </Button>
             </form>
           </div>
         </div>

@@ -41,6 +41,12 @@
 
 .sendButton {
   margin-left: 10px !important;
+  height: 100%;
+}
+
+.newButton {
+  margin-left: 10px !important;
+  float: right;
 }
 
 /* Response History */
