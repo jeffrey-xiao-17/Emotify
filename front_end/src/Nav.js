@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { createMedia } from "@artsy/fresnel";
 import { Link } from "react-router-dom";
+// import PropTypes from "prop-types";
 import {
   Header,
   Container,
@@ -25,7 +26,6 @@ class Nav extends Component {
 
   render() {
     const { fixed } = this.state;
-
     return (
       <Media greaterThan="mobile">
         <Visibility
@@ -39,17 +39,20 @@ class Nav extends Component {
               pointing={!fixed}
               secondary={!fixed}
               size="large"
+              style={{ border: "none" }}
             >
               <Container>
                 <Link to="/">
                   <Menu.Item as="a">
-                    <Header as="h1">EMOTIFY</Header>
+                    <a class="active item">
+                      <Header as="h1">EMOTIFY</Header>
+                    </a>
                   </Menu.Item>
                 </Link>
 
                 <Menu.Item position="right">
                   <Link to="/interaction">
-                    <a class="active item">Interaction</a>
+                    <a class="item">Interaction</a>
                   </Link>
                   <Link to="/results">
                     <a class="item">Results</a>
