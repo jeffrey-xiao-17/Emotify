@@ -27,7 +27,6 @@ app.use(cors());
 let pool;
 const poolPromise = createPool()
    .catch((err) => {
-      logger.error(err);
       process.exit(1)
    }
 );
@@ -41,7 +40,6 @@ app.use(async (req, res, next) => {
     next();
   }
   catch (err) {
-    logger.error(err);
     return next(err);
   }
 });
