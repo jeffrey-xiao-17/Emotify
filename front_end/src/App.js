@@ -18,6 +18,7 @@ function App() {
         <Route path="/" exact component={InteractionView} />
         <Route path="/results" component={ResultsView} />
         <Route path="/history" component={HistoryView} />
+        <Route path="/login" component={LoginView} />
       </Switch>
     </Router>
   );

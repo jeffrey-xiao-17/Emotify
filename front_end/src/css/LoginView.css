@@ -1,0 +1,31 @@
+body, html {
+}
+
+.LoginView {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ margin-top: 100px;
+}
+
+.titleText {
+  color: aqua;
+  font-size: 80px;
+}
+
+.button {
+background-color: #cdc1ff;
+font-size: 30px;
+width: 300px;
+margin: 10px;
+border-radius: 20px;
+border-width: 0;
+}
+
+.buttonContainer {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+}
