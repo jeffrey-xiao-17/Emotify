@@ -9,6 +9,7 @@ import Nav from "./Nav";
 import InteractionView from "./Components/InteractionsPage/InteractionView";
 import ResultsView from "./Components/ResultsPage/ResultsView";
 import HistoryView from "./Components/HistoryPage/HistoryView";
+import LoginView from "./Components/LoginPage/LoginView";
 
 function App() {
   return (
