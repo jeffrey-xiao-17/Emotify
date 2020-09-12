@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styles from "../css/ChatBot.module.css";
+import styles from "../../css/ChatBot.module.css";
 import cx from "classnames";
 
 class ChatBot extends Component {
