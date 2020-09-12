@@ -1,8 +1,9 @@
 import React from "react";
-import styles from "./App.module.css";
+import styles from "./css/App.module.css";
+import "semantic-ui-css/semantic.min.css";
 
 // Components
-import View from "./Components/View/View";
+import View from "./Components/View";
 
 function App() {
   return (

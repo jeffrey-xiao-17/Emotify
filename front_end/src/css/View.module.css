@@ -1,0 +1,13 @@
+.bottom {
+  position: absolute;
+  top: 85vh;
+  width: 75%;
+  margin: auto;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+.image {
+  margin: 15%;
+}

@@ -1,0 +1,13 @@
+.textfield {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.sendButton {
+  margin-left: 10px !important;
+}
