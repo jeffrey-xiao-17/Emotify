@@ -1,7 +1,5 @@
 import React from "react";
-import styles from "./css/App.module.css";
 import "semantic-ui-css/semantic.min.css";
-import cx from "classnames";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Nav from "./Nav";
 
@@ -16,10 +14,10 @@ function App() {
     <Router>
       <Nav />
       <Switch>
-        <Route path="/" exact component={InteractionView} />
+        <Route path="/" exact component={LoginView} />
+        <Route path="/interaction" component={InteractionView} />
         <Route path="/results" component={ResultsView} />
         <Route path="/history" component={HistoryView} />
-        <Route path="/login" component={LoginView} />
       </Switch>
     </Router>
   );
