@@ -10,6 +10,7 @@ class InteractionView extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      generatedBotProps: props.generatedBot(),
       message: "",
       messages: [],
       authors: [
@@ -27,6 +28,7 @@ class InteractionView extends Component {
       idCount: 1,
       inputDisabled: false,
     };
+    console.log(this.generatedBotProps);
   }
 
   onTodoChange(value) {
@@ -89,11 +91,10 @@ class InteractionView extends Component {
   }
 
   render() {
-    var history = "";
     return (
       <div className={styles.full}>
         <div className={styles.image}>
-          <ChatBot />
+          <ChatBot bot={this.state.generatedBotProps} />
         </div>
 
         <div className={styles.bottom}>

@@ -1,14 +1,6 @@
 import React from "react";
 import styles from "../../../css/HistoryView.module.css";
-import {
-  Grid,
-  Message,
-  Statistic,
-  Card,
-  Icon,
-  Image,
-  Button,
-} from "semantic-ui-react";
+import { Statistic, Card, Image } from "semantic-ui-react";
 
 function HistoryCell({ element }) {
   return (

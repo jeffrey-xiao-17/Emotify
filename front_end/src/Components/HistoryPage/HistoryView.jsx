@@ -4,21 +4,6 @@ import HistoryCell from "./components/HistoryCell";
 
 import { Message, Card } from "semantic-ui-react";
 
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
 function HistoryView() {
   const tempData = [
     {

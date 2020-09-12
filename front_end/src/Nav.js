@@ -42,23 +42,21 @@ class Nav extends Component {
               style={{ border: "none" }}
             >
               <Container>
-                <Link to="/">
+                <Link class="active item" to="/">
                   <Menu.Item as="a">
-                    <a class="active item">
-                      <Header as="h1">EMOTIFY</Header>
-                    </a>
+                    <Header as="h1">EMOTIFY</Header>
                   </Menu.Item>
                 </Link>
 
                 <Menu.Item position="right">
-                  <Link to="/interaction">
-                    <a class="item">Interaction</a>
+                  <Link class="item" to="/interaction">
+                    Interaction
                   </Link>
-                  <Link to="/results">
-                    <a class="item">Results</a>
+                  <Link class="item" to="/results">
+                    Results
                   </Link>
-                  <Link to="/history">
-                    <a class="item">History</a>
+                  <Link class="item" to="/history">
+                    History
                   </Link>
                 </Menu.Item>
               </Container>
