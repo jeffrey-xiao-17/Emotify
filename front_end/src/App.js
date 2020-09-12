@@ -18,6 +18,7 @@ function App() {
       <Nav />
       <Switch>
         <Route path="/" exact component={LoginView} />
+        <Route path="/login" exact component={LoginView} />
         <PrivateRoute
           pathname="/interaction"
           render={() =><InteractionView generatedBot={generateBot}/>}

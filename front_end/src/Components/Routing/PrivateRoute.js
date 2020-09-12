@@ -5,19 +5,21 @@ function PrivateRoute ({component: Component, pathname, authed, render=null}) {
   if (!authed) {
     return <Redirect to="/"/>
   }
-  if (render==null){
-    return (
-      <Route
-        render={() => <Component/>}
-        path={pathname}
-      />
-    )
-  }
+
+  // if (render==null){
+  //   return (
+  //     <Route
+  //       render={() => <Component/>}
+  //       path={pathname}
+  //     />
+  //   )
+  // }
   else {
     return (
       <Route
         path={pathname}
         render={render}
+        component={Component}
       />
     )
   }
