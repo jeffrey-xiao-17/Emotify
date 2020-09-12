@@ -85,7 +85,7 @@ class InteractionView extends Component {
         ],
         inputDisabled: false,
       });
-    }, 2000);
+    }, 3000);
   }
 
   render() {

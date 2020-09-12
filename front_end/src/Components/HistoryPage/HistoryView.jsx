@@ -2,15 +2,7 @@ import React from "react";
 import styles from "../../css/HistoryView.module.css";
 import HistoryCell from "./components/HistoryCell";
 
-import {
-  Grid,
-  Message,
-  Statistic,
-  Card,
-  Icon,
-  Image,
-  Button,
-} from "semantic-ui-react";
+import { Message, Card } from "semantic-ui-react";
 
 const monthNames = [
   "January",
