@@ -7,10 +7,11 @@ function LoginView() {
   return (
     <div className={styles.LoginView}>
       <h1 className={styles.titleText}>EMOTIFY</h1>
-
       <div className={styles.buttonContainer}>
         <GoogleButton
           onClick={() => {
+            // login with google, then if logged in:
+            // setAuthed(true)
             console.log("Google button clicked");
           }}
         />

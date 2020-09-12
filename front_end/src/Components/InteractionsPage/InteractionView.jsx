@@ -108,6 +108,7 @@ class InteractionView extends Component {
   }
 
   render() {
+
     return (
       <div className={styles.full}>
         <div className={styles.image}>

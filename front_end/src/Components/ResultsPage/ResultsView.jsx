@@ -3,7 +3,9 @@ import styles from "../../css/Results.module.css";
 import { Grid, Message, Statistic } from "semantic-ui-react";
 
 class ResultsView extends Component {
+
   render() {
+
     return (
       <div>
         <div className={styles.width}>
