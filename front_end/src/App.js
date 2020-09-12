@@ -16,10 +16,10 @@ function App() {
     <Router>
       <Nav />
       <Switch>
-        <Route path="/" exact component={InteractionView} />
+        <Route path="/" exact component={LoginView} />
+        <Route path="/interaction" component={InteractionView} />
         <Route path="/results" component={ResultsView} />
         <Route path="/history" component={HistoryView} />
-        {/* <Route path="/login" component={LoginView} /> */}
       </Switch>
     </Router>
   );

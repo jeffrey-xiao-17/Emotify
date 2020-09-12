@@ -37,11 +37,14 @@ class Nav extends Component {
               size="large"
             >
               <Container>
-                <Menu.Item as="a" active>
-                  APP TITLE PLACEHOLDER
-                </Menu.Item>
+                <Link to="/">
+                  <Menu.Item as="a" active>
+                    APP TITLE PLACEHOLDER
+                  </Menu.Item>
+                </Link>
+
                 <Menu.Item position="right">
-                  <Link to="/">
+                  <Link to="/interaction">
                     <a class="active item">Interaction</a>
                   </Link>
                   <Link to="/results">
