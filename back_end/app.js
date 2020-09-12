@@ -24,6 +24,28 @@ app.use(multer().none()); // requires the "multer" module
 
 app.use(cors());
 
+let pool;
+const poolPromise = createPool()
+   .catch((err) => {
+      logger.error(err);
+      process.exit(1)
+   }
+);
+
+app.use(async (req, res, next) => {
+  if (pool) {
+    return next();
+  }
+  try {
+    pool = await poolPromise;
+    next();
+  }
+  catch (err) {
+    logger.error(err);
+    return next(err);
+  }
+});
+
 app.get("/trial", cors(), async function (req, res) {
    let db;
    try {
