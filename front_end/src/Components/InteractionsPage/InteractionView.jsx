@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styles from "../css/InteractionView.module.css";
+import styles from "../../css/InteractionView.module.css";
 import cx from "classnames";
 
 // Components
@@ -11,18 +11,6 @@ class View extends Component {
   render() {
     return (
       <div className={styles.full}>
-        <div class="ui large pointing secondary menu">
-          <div className={cx("ui container", "right item")}>
-            <a class="item">APP TITLE PLACEHOLDER</a>
-          </div>
-          <div class="right item">
-            {/* <div className={cx("ui container", "right item", styles.right)}> */}
-            <a class="active item">Conversation</a>
-            <a class="item">Results</a>
-            <a class="item">History</a>
-            {/* </div> */}
-          </div>
-        </div>
         {/* <button className={cx("circular ui icon button", styles.settings)}>
           <i class="icon settings"></i>
         </button> */}
