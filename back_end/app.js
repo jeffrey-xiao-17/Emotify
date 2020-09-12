@@ -9,6 +9,8 @@
 // DB-PASS: jvsb0olrh7N2klMC
 
 "use strict";
+require('dotenv').config();
+
 const mysql = require("promise-mysql");
 const express = require("express");
 const app = express();
@@ -43,12 +45,17 @@ app.get("/trial", cors(), async function (req, res) {
  * @returns Database object
  */
 async function getDB() {
+   const config = {
+      user: process.env.SQL_USER,
+      database: process.env.SQL_DATABASE,
+      password: process.env.SQL_PASSWORD
+   };
+
    const database = await mysql.createConnection({
-     host: "35.235.126.200",
-     port: "3306",
-     user: "root",
-     password: "main",
-     database: "autismdb"
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      database: process.env.DB_DATABASE,
+      password: process.env.DB_PASS
    });
    return database;
 }
