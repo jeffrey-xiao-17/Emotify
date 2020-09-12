@@ -27,7 +27,7 @@ app.use(cors());
 app.get("/trial", cors(), async function (req, res) {
    let db;
    try {
-      // db = await getDB();
+      db = await getDB();
       res.status(200).send("it works");
    } catch (error) {
       res.status(200).send("it doesn't works");
