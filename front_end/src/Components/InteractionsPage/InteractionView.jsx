@@ -24,25 +24,21 @@ class InteractionView extends Component {
           isTyping: false,
         },
       ],
+      idCount: 1,
       inputDisabled: false,
     };
   }
 
   onTodoChange(value) {
-    // this.state.authors[0].isTyping = value !== null && value !== "";
     console.log("User is typing...");
     this.setState({
       message: value,
-      // authors: update(this.state.authors, {
-      //   0: { isTyping: { $set: value !== null && value !== "" } },
-      // }),
     });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.message !== null && this.state.message !== "") {
-      console.log(`Message sent: ${this.state.message}`);
       const justSent = this.state.message;
       this.setState({
         message: "",
@@ -50,24 +46,29 @@ class InteractionView extends Component {
           ...this.state.messages,
           {
             authorId: 1,
+            id: this.state.idCount++,
             message: justSent,
             createdOn: new Date(),
-            isSend: true,
+            isSend: false,
           },
         ],
       });
-      this.botResponse();
-      console.log(this.state);
+      this.botResponse(this.state.idCount - 1);
     }
   }
 
-  botResponse() {
-    this.setState({
-      authors: update(this.state.authors, {
-        1: { isTyping: { $set: true } },
-      }),
-      inputDisabled: true,
-    });
+  botResponse(id) {
+    this.setState({ inputDisabled: true });
+    setTimeout(() => {
+      this.setState((previousState) => ({
+        messages: previousState.messages.map((m) =>
+          m.id === id ? { ...m, isSend: true } : m
+        ),
+        authors: update(this.state.authors, {
+          1: { isTyping: { $set: true } },
+        }),
+      }));
+    }, 1000);
     setTimeout(() => {
       this.setState({
         authors: update(this.state.authors, {

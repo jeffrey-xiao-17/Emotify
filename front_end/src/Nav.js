@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import { createMedia } from "@artsy/fresnel";
 import { Link } from "react-router-dom";
-import { Container, Menu, Segment, Visibility } from "semantic-ui-react";
+import {
+  Header,
+  Container,
+  Menu,
+  Segment,
+  Visibility,
+} from "semantic-ui-react";
 
 const { Media } = createMedia({
   breakpoints: {
@@ -36,8 +42,8 @@ class Nav extends Component {
             >
               <Container>
                 <Link to="/">
-                  <Menu.Item as="a" active>
-                    APP TITLE PLACEHOLDER
+                  <Menu.Item as="a">
+                    <Header as="h1">EMOTIFY</Header>
                   </Menu.Item>
                 </Link>
 

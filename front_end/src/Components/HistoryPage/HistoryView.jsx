@@ -1,30 +1,85 @@
-import React from 'react';
-import styles from '../../css/HistoryView.module.css'
-import HistoryCell from './components/HistoryCell'
+import React from "react";
+import styles from "../../css/HistoryView.module.css";
+import HistoryCell from "./components/HistoryCell";
+
+import {
+  Grid,
+  Message,
+  Statistic,
+  Card,
+  Icon,
+  Image,
+  Button,
+} from "semantic-ui-react";
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 function HistoryView() {
-  
-  const tempData = [
-    {date: "10/12/20", score: 7, simscore: 6},
-    {date: "10/13/20", score: 8, simscore: 9},
-    {date: "10/14/20", score: 9, simscore: 5},
-  ]
+  const tempData = [
+    {
+      date: "October 12, 2020",
+      name: "Steve",
+      topic: "Apple",
+      score: 7,
+      simscore: 6,
+      src: "https://react.semantic-ui.com/images/avatar/large/steve.jpg",
+    },
+    {
+      date: "October 13, 2020",
+      name: "Molly",
+      topic: "The Big Bang",
+      score: 8,
+      simscore: 9,
+      src: "https://react.semantic-ui.com/images/avatar/large/molly.png",
+    },
+    {
+      date: "October 14, 2020",
+      name: "Jenny",
+      topic: "Football",
+      score: 9,
+      simscore: 5,
+      src: "https://react.semantic-ui.com/images/avatar/large/jenny.jpg",
+    },
+  ];
 
-  return (
+  return (
     <div className={styles.mainContainer}>
-      <h1> Interactions History</h1>
-      <div className={styles.graphSquare}>
-        {/* TODO: Graph */}
-      </div>
-
-      <div className={styles.historyList}>
-        {tempData.map(element => (
-          <HistoryCell element={element}/>
-        ))}
-      </div>
-      
-    </div>
-  );
+      <Message className={styles.message} style={{ textAlign: "center" }}>
+        <Message.Header>
+          <h1 style={{ fontSize: "40px" }}>Interaction History</h1>
+        </Message.Header>
+        <br />
+        <br />
+        <Card style={{ margin: "auto" }}>
+          <Card.Content description={"GRAPH GOES HERE"} />
+          <Card.Content description={"GRAPH GOES HERE"} />
+          <Card.Content description={"GRAPH GOES HERE"} />
+        </Card>
+        <br />
+        <Card.Group className={styles.historyCards}>
+          {tempData.map((element) => (
+            <HistoryCell element={element} />
+          ))}
+        </Card.Group>
+      </Message>
+            
+      <div className={styles.historyList}>               </div>
+                 
+    </div>
+  );
 }
 
 export default HistoryView;
