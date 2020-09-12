@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styles from "../../css/ResponseHistory.module.css";
+import styles from "../../css/HistoryView.module.css";
 import cx from "classnames";
 
 class ResponseHistory extends Component {
