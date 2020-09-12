@@ -23,8 +23,16 @@ function App() {
           render={() =><InteractionView generatedBot={generateBot}/>}
           authed={authed}
         />
-        <PrivateRoute authed={authed} component={ResultsView} pathname="/results" />
-        <PrivateRoute authed={authed} component={HistoryView} pathname="/history" />
+        <PrivateRoute 
+          authed={authed} 
+          render={()=><ResultsView/>}
+          pathname="/results"
+        />
+        <PrivateRoute 
+          authed={authed} 
+          pathname="/history" 
+          render={()=><HistoryView/>}
+        />
         {/* <Route
           path="/interaction"
           render={() => <InteractionView generatedBot={generateBot} />}
