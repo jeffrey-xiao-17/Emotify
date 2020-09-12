@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styles from "../../css/Results.module.css";
 import { Grid, Message } from "semantic-ui-react";
-import cx from "classnames";
 
 class ResultsView extends Component {
   render() {

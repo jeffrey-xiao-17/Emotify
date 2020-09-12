@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 // import styles from "../../css/InteractionView.module.css";
-import cx from "classnames";
 import "../../css/Results.module.css";
 
 class HistoryView extends Component {

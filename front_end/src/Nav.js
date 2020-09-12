@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { createMedia } from "@artsy/fresnel";
-import styles from "./css/App.module.css";
-import cx from "classnames";
 import { Link } from "react-router-dom";
 import { Container, Menu, Segment, Visibility } from "semantic-ui-react";
 
-const { MediaContextProvider, Media } = createMedia({
+const { Media } = createMedia({
   breakpoints: {
     mobile: 0,
     tablet: 768,

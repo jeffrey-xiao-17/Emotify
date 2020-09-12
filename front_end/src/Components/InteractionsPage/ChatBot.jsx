@@ -9,6 +9,7 @@ class ChatBot extends Component {
         <img
           src="https://react.semantic-ui.com/images/wireframe/image.png"
           className={cx("ui image", styles.avatar)}
+          alt="placeholder"
         />
       </div>
     );

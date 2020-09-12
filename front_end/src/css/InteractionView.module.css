@@ -1,6 +1,6 @@
 .bottom {
   position: absolute;
-  top: 85vh;
+  bottom: 7.5vh;
   width: 75%;
   margin: auto;
   left: 50%;
@@ -24,4 +24,29 @@
 
 .full {
   height: 100%;
+}
+
+/* Text Input */
+.textfield {
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.sendButton {
+  margin-left: 10px !important;
+}
+
+/* Response History */
+.textfieldResponses {
+  width: 100%;
+  margin: auto auto 10px auto;
+  background-color: #f5f5f5;
+  text-align: left;
+  white-space: pre-wrap;
 }

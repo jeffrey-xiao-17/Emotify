@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../../css/LoginView.module.css";
-import SampleButton from "./components/SampleButton";
+// import SampleButton from "./components/SampleButton";
 
 function LoginView() {
   return (
