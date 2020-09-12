@@ -30,8 +30,7 @@ app.get("/trial", cors(), async function (req, res) {
       db = await getDB();
       res.status(200).send("it works");
    } catch (error) {
-      res.status(200).send("it doesn't works");
-      console.log(error);
+      res.status(200).send(error);
    }
 
    if (db) {
@@ -48,7 +47,7 @@ async function getDB() {
      host: "35.235.126.200",
      port: "3306",
      user: "root",
-     password: "root",
+     password: "main",
      database: "autismdb"
    });
    return database;
