@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "semantic-ui-css/semantic.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Nav from "./Nav";
@@ -11,38 +11,39 @@ import LoginView from "./Components/LoginPage/LoginView";
 import PrivateRoute from "./Components/Routing/PrivateRoute";
 
 function App() {
-  const [authed, setAuthed] = useState(true)
+  const [authed, setAuthed] = useState(true);
 
   return (
     <Router>
       <Nav />
-      <Switch>
-        <Route path="/" exact component={LoginView} />
-        <Route path="/login" exact component={LoginView} />
-        <PrivateRoute
-          pathname="/interaction"
-          render={() =><InteractionView generatedBot={generateBot}/>}
-          authed={authed}
-        />
-        <PrivateRoute 
-          authed={authed} 
-          render={()=><ResultsView/>}
-          pathname="/results"
-        />
-        <PrivateRoute 
-          authed={authed} 
-          pathname="/history" 
-          render={()=><HistoryView/>}
-        />
-        {/* <Route
+      {/* <Switch> */}
+      <Route path="/" exact={true} component={LoginView} />
+      <PrivateRoute
+        exact={true}
+        pathname="/interaction"
+        authed={authed}
+        render={() => <InteractionView generatedBot={generateBot} />}
+      />
+      <PrivateRoute
+        exact={true}
+        pathname="/results"
+        authed={authed}
+        render={() => <ResultsView />}
+      />
+      <PrivateRoute
+        exact={true}
+        pathname="/history"
+        authed={authed}
+        render={() => <HistoryView />}
+      />
+      {/* <Route
           path="/interaction"
           render={() => <InteractionView generatedBot={generateBot} />}
           authed={authed}
         />
         <Route authed={authed} path="/results" component={ResultsView} />
         <Route authed={authed} path="/history" component={HistoryView} /> */}
-      
-      </Switch>
+      {/* </Switch> */}
     </Router>
   );
 }
@@ -92,8 +93,6 @@ function generateBot() {
         Math.floor(Math.random() * Math.floor(SKIN_COLOR_OPTIONS.length))
       ],
   };
-  console.log("CONFIGUREATION");
-  console.log(configuration);
   return configuration;
 }
 
