@@ -31,6 +31,7 @@ app.get("/trial", cors(), async function (req, res) {
       res.status(200).send("it works");
    } catch (error) {
       res.status(200).send("it doesn't works");
+      console.log(error);
    }
 
    if (db) {
