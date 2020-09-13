@@ -20,10 +20,12 @@ function App() {
         <Route path="/" exact={true} component={LoginView} />
         <Route
           path="/empathize"
-          render={() => <EmpathizeView avatarGenerator={randomAvatarConfiguration} />}
+          render={() => (
+            <EmpathizeView avatarGenerator={randomAvatarConfiguration} />
+          )}
         />
         <Route
-          path="/interaction"
+          path="/moodboost"
           render={() => (
             <InteractionView avatarGenerator={randomAvatarConfiguration} />
           )}
