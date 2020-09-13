@@ -14,6 +14,9 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const multer = require("multer");
+const language = require('@google-cloud/language');
+
+const client = new language.LanguageServiceClient();
 
 // for application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true })) // built-in middleware
@@ -64,16 +67,16 @@ const createPool = async () => {
       // [START cloud_sql_mysql_mysql_limit]
       // 'connectionLimit' is the maximum number of connections the pool is allowed
       // to keep at once.
-      connectionLimit: 5,
+      connectionLimit: 50,
       // [END cloud_sql_mysql_mysql_limit]
 
       // [START cloud_sql_mysql_mysql_timeout]
       // 'connectTimeout' is the maximum number of milliseconds before a timeout
       // occurs during the initial connection to the database.
-      connectTimeout: 10000, // 10 seconds
+      connectTimeout: 100000000, // 10 seconds
       // 'acquireTimeout' is the maximum number of milliseconds to wait when
       // checking out a connection from the pool before a timeout error occurs.
-      acquireTimeout: 10000, // 10 seconds
+      acquireTimeout: 100000000, // 10 seconds
       // 'waitForConnections' determines the pool's action when no connections are
       // free. If true, the request will queued and a connection will be presented
       // when ready. If false, the pool will call back with an error.
@@ -96,36 +99,53 @@ const createPool = async () => {
 };
 
 let pool;
-// const poolPromise = createPool()
-//    .catch((err) => {
-//       process.exit(1)
-//    }
-// );
-//
-// app.use(async (req, res, next) => {
-//   if (pool) {
-//     return next();
-//   }
-//   try {
-//     pool = await poolPromise;
-//     next();
-//   }
-//   catch (err) {
-//     return next(err);
-//   }
-// });
+const poolPromise = createPool()
+   .catch((err) => {
+      console.error(err);
+      process.exit(1);
+   }
+);
 
+app.use(async (req, res, next) => {
+  if (pool) {
+    return next();
+  }
+  try {
+    pool = await poolPromise;
+    next();
+  }
+  catch (err) {
+    return next(err);
+  }
+});
+
+app.post("/process", cors(), async function (req, res) {
+   if (req.body.text) {
+      const document = {
+         content: req.body.text,
+         type: 'PLAIN_TEXT',
+      };
+      const [sentimentResult] = await client.analyzeSentiment({document});
+      const [entitySentimentResult] = await client.analyzeEntitySentiment({document});
+      const results = {
+         sentimentResult,
+         entitySentimentResult
+      };
+      res.status(200).json(results).end();
+   } else {
+      res.status(400).send("To use this endpoint, I need a text parameter.");
+   }
+});
 
 app.get("/history", cors(), async function (req, res) {
    if (req.query.user) {
       try {
-         // const userHistory = await getUserHistory(req.query.user, pool);
-         //res.set("Content-Type", "application/json");
-         //res.json(userHistory);
-         res.set("Content-Type", "text/plain");
-         res.send("Here is your history");
+         const userHistory = await getUserHistory(req.query.user, pool);
+         res.set("Content-Type", "application/json");
+         res.status(200).json(userHistory).end();
       } catch (error) {
-         dbError(res, "");
+         console.error(error);
+         dbError(res, error);
       }
    } else {
       res.status(400).send("To use this endpoint, I need a username parameter.");
@@ -135,75 +155,37 @@ app.get("/history", cors(), async function (req, res) {
 app.post("/register", cors(), async function (req, res) {
    if (req.body.user && req.body.user.length > 1) {
       try {
-         //await registerUser(req.body.user, pool);
-         res.set("Content-Type", "text/plain");
-         res.send("User successfully registered!");
+         const result = await registerUser(req.body.user, pool);
+         if (result) {
+             pool.end();
+            res.set("Content-Type", "text/plain");
+            res.status(200).send("User successfully registered!").end();
+         } else {
+             dbError(res, "");
+         }
       } catch (error) {
-         dbError(res, "");
+          console.error(error);
+         dbError(res, error);
       }
    } else {
-      res.status(400).send("To use this endpoint, I need a valid username parameter.");
+      res.status(400).send("To use this endpoint, I need a valid username parameter.").end();
    }
 });
-
-// app.post("/submit", cors(), async function (req, res) {
-//    if (req.body.sim_score && req.body.user_score && req.body.topic && req.body.name
-//       && req.body.user && req.body.sim) {
-//       try {
-//          await submitInteraction(req.body.sim_score, req.body.user_score, req.body.topic,
-//                                  req.body.name, req.body.user, req.body.sim);
-//          res.set("Content-Type", "text/plain");
-//          res.send("Interaction successfully submitted!");
-//       } catch (error) {
-//          dbError(res, "");
-//       }
-//    } else {
-//       req.status(400).send("To use this endpoint, I need a valid simulated score, user score, " +
-//                            "topic, and name");
-//    }
-// });
-
-/**
- * Submits the info for a users' interaction as well as the sim that was present
- * @param {String} simScore - The simulated score of the users' Interaction
- * @param {String} userScore - The user's score of the interaction
- * @param {String} topic - The topic of discussion of the interaction
- * @param {String} name - The name of the sim
- * @param {String} user - The user's google ID
- * @param {String} accessoryType - The sim's accessory type
- * @param {String} hairColor - The hair color of the sim
- * @param {String} hatColor - The hat color of the sim
- * @param {String} facialHair - The facial hair of the sim
- * @param {String} clothe - The clothe of the sim
- * @param {String} clotheColor - The clothe color of the sim
- * @param {String} skinColor - The color of skin of the sim
- * @param {MYSQLConnection} pool - The connection pool to use for queries
- */
-// async function submitInteraction(simScore, userScore, topic, name, user, accessoryType,
-//                                  hairColor, hatColor, facialHair, clothe, clotheColor,
-//                                  skinColor) {
-//    const submitSimQuery = "INSERT INTO sim(accessory_type, hair_color, hat_color, facial_hair, " +
-//                           "clothe, clothe_color, skin_color) VALUES (?, ?, ?, ?, ?, ?, ?);";
-//    const simResults = await pool.query(submitSimQuery, [accessoryType, hairColor, hatColor,
-//                                                         facialHair, clothe, clotheColor, skinColor]);
-//    const simId = simResults.insertId;
-//
-//    const submitInteractionQuery = "INSERT INTO interaction(user_id, sim_score, user_score, topic" +
-//                                      ", name, sim_id) " +
-//                                   "VALUES ((SELECT id FROM user WHERE google_name = ?)" +
-//                                      ", ?, ?, ?, ?, ?);";
-//    await pool.query(submitSimQuery, [name, sim_score, user_score, topic, name, simId]);
-// }
 
 /**
  * Registers a user's google ID to the database
  * @param {String} user - The user's google ID
  * @param {MYSQLConnection} pool - The connection pool to use for queries
  */
-// async function registerUser(user, pool) {
-//    const registrationQuery = "INSERT INTO user(google_name) VALUES (?);";
-//    await pool.query(registrationQuery, [user]);
-// }
+async function registerUser(user, pool) {
+   const registrationQuery = "INSERT INTO user(google_name) VALUES (?);";
+   const result = await pool.query(registrationQuery, [user]);
+   if (result) {
+       return true;
+   } else {
+       return false;
+   }
+}
 
 /**
  * Delivers a plain text database error message to the user
@@ -213,7 +195,7 @@ app.post("/register", cors(), async function (req, res) {
  *                    made
  */
 async function getUserHistory(user, pool) {
-   const historyQuery = "SELECT (i.sim_score - i.user_score), i.date_made " +
+   const historyQuery = "SELECT i.sim_score, i.user_score, i.date_made " +
                         "FROM user u, interaction i " +
                         "WHERE u.id = i.user_id AND u.google_name = ? " +
                         "LIMIT 20;";
@@ -228,8 +210,8 @@ async function getUserHistory(user, pool) {
  */
 function dbError(res, message) {
    res.set("Content-Type", "text/plain");
-   res.status(DATABASE_ERROR_CODE).send("Something has occurred with the database, please try " +
-                                        "again later: " + message);
+   res.status(500).send("Something has occurred with the database, please try " +
+                                        "again later: " + message).end();
 }
 
 const PORT = process.env.PORT || 8080;
