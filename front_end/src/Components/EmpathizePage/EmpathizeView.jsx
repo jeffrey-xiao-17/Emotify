@@ -210,6 +210,10 @@ class EmpathizeView extends Component {
           inputTextSentiment: parseFloat(res),
           finished: true,
         });
+      } else {
+        this.setState({
+          inputText: "",
+        });
       }
     }
   }
