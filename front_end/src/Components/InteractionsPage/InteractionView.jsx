@@ -16,7 +16,7 @@ class InteractionView extends Component {
     super(props);
     console.log(props);
     this.state = {
-      generatedBotProps: props.generatedBot(),
+      generatedBotProps: props.avatarGenerator(),
       message: "",
       messages: [],
       authors: [
@@ -110,7 +110,7 @@ class InteractionView extends Component {
 
   resetState() {
     this.setState({
-      generatedBotProps: this.props.generatedBot(),
+      generatedBotProps: this.props.avatarGenerator(),
       message: "",
       messages: [],
       authors: [
