@@ -18,34 +18,11 @@ class EmpathizeView extends Component {
       sourceText: "",
       link: "",
       inputText: "",
-      userProcess: {},
-      sourceProcess: {}
     };
     this.myRef = React.createRef();
     this.focus = this.focus.bind(this);
   }
 
-  makeUserProcess(text) {
-     const makeRequest = async (text) => {
-        const response = await axios.post('https://autismproject.uc.r.appspot.com/process', {
-           text
-        });
-
-        this.setState({ userProcess: response.data });
-     };
-     return makeRequest(text);
- }
-
- makeSourceProcess(text) {
-    const makeRequest = async (text) => {
-      const response = await axios.post('https://autismproject.uc.r.appspot.com/process', {
-          text
-      });
-
-      this.setState({ sourceProcess: response.data });
-    };
-    return makeRequest(text);
-}
 
   componentDidMount() {
     this.loadNewText();
@@ -59,9 +36,9 @@ class EmpathizeView extends Component {
     });
   }
 
-  focus() {
-    this.myRef.current.focus();
-  }
+    focus() {
+        this.myRef.current.focus();
+    }
 
   onTodoChange(value) {
     this.setState({
@@ -80,9 +57,9 @@ class EmpathizeView extends Component {
     return (
       <div className={styles.width}>
         <Message className={styles.quote}>
-          <Message.Header>
-            <h1>Changes in Service</h1>
-          </Message.Header>
+            <Message.Header>
+                <h1><a href={this.state.link}>{this.state.title}</a></h1>
+            </Message.Header>
           <p style={{ fontSize: "1.25rem" }}>{this.state.sourceText}</p>
         </Message>
         <div className={styles.window}>

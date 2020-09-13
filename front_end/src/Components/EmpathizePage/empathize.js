@@ -9,25 +9,11 @@ const ANALYZE_ENTITY_SENTIMENT_METHOD =
 const ACCESS_TOKEN =
   "ya29.c.Ko8B3Afv9eriAEJnvg-riokaH7tz3KKGhpxwy6sEoDTQae8Xi3PYa-iHCCAUGDZWMp8xRphOvxaoIAp7vEG50G9jU-O4hVdtUlDXyPk1GwTPOn1HClBAQXk66ZbE6a4RBJ1tc2TQfxUb22pBHnvDRZasG5nRv7OpHvpiYwRxPns1UuNfXGjPEs36LhpRcR4Dvuc";
 
-async function analyzeEntitySentiment(sourceText) {
-  axios
-    .post(ANALYZE_ENTITY_SENTIMENT_METHOD, {
-      headers: {
-        Authorization: "Bearer " + ACCESS_TOKEN,
-        "Content-Type": "application/json; charset=utf-8",
-      },
-      document: {
-        type: "PLAIN_TEXT",
-        content: sourceText,
-      },
-      encodingType: "UTF8",
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+async function analyzeText(text) {
+  const response = await axios.post('https://autismproject.uc.r.appspot.com/process', {
+    text
+  });
+  return response.data;
 }
 
 // Returns some natural language text and its URL in the format
