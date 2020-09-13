@@ -83,7 +83,7 @@ function computeOptions(s) {
       break;
     }
   }
-  index = index == -1 ? 9 : index;
+  index = index === -1 ? 9 : index;
   var res = {
     eye: 0,
     eyebrow: 0,
