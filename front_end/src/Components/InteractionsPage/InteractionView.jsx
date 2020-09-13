@@ -14,7 +14,8 @@ class InteractionView extends Component {
   };
   constructor(props) {
     super(props);
-    console.log(props);
+    const b = (Math.floor(Math.random() * 2) === 1 ? 1 : -1) * Math.random();
+    const u = (Math.floor(Math.random() * 2) === 1 ? 1 : -1) * Math.random();
     this.state = {
       generatedBotProps: props.avatarGenerator(),
       message: "",
@@ -33,6 +34,8 @@ class InteractionView extends Component {
       ],
       idCount: 1,
       inputDisabled: false,
+      botSentiment: b,
+      userSentiment: u,
     };
     this.myRef = React.createRef();
     this.focus = this.focus.bind(this);
@@ -109,6 +112,8 @@ class InteractionView extends Component {
   }
 
   resetState() {
+    const b = (Math.floor(Math.random() * 2) === 1 ? 1 : -1) * Math.random();
+    const u = (Math.floor(Math.random() * 2) === 1 ? 1 : -1) * Math.random();
     this.setState({
       generatedBotProps: this.props.avatarGenerator(),
       message: "",
@@ -127,6 +132,8 @@ class InteractionView extends Component {
       ],
       idCount: 1,
       inputDisabled: false,
+      botSentiment: b,
+      userSentiment: u,
     });
   }
 
@@ -134,14 +141,18 @@ class InteractionView extends Component {
     return (
       <div className={styles.full}>
         <div className={styles.image}>
-          <ChatBot bot={this.state.generatedBotProps} />
+          <ChatBot
+            bot={this.state.generatedBotProps}
+            botSentiment={this.state.botSentiment}
+            userSentiment={this.state.userSentiment}
+          />
         </div>
 
         <div className={styles.bottom}>
           <ChatFeed
-            messages={this.state.messages} // Array: list of message objects
-            authors={this.state.authors} // Array: list of authors
-            yourAuthorId={1} // Number: Your author id (corresponds with id from list of authors)
+            messages={this.state.messages}
+            authors={this.state.authors}
+            yourAuthorId={1}
             showIsTyping={true}
             className={styles.history}
           />
