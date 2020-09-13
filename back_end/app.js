@@ -162,7 +162,7 @@ async function registerUser(user, pool) {
  *                    made
  */
 async function getUserHistory(user, pool) {
-   const historyQuery = "SELECT i.sim_score, i.user_score, i.date_made " +
+   const historyQuery = "SELECT (i.sim_score - i.user_score), i.date_made " +
                         "FROM user u, interaction i " +
                         "WHERE u.id = i.user_id AND u.google_name = ? " +
                         "LIMIT 20;";
