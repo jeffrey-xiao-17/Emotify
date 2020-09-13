@@ -119,9 +119,11 @@ app.use(async (req, res, next) => {
 app.get("/history", cors(), async function (req, res) {
    if (req.query.user) {
       try {
-         const userHistory = await getUserHistory(req.query.user, pool);
-         res.set("Content-Type", "application/json");
-         res.json(userHistory);
+         // const userHistory = await getUserHistory(req.query.user, pool);
+         //res.set("Content-Type", "application/json");
+         //res.json(userHistory);
+         res.set("Content-Type", "text/plain");
+         res.send("Here is your history");
       } catch (error) {
          dbError(res, "");
       }
@@ -144,6 +146,55 @@ app.post("/register", cors(), async function (req, res) {
    }
 });
 
+app.post("/submit", cors(), async function (req, res) {
+   if (req.body.sim_score && req.body.user_score && req.body.topic && req.body.name
+      && req.body.user && req.body.sim) {
+      try {
+         await submitInteraction(req.body.sim_score, req.body.user_score, req.body.topic,
+                                 req.body.name, req.body.user, req.body.sim);
+         res.set("Content-Type", "text/plain");
+         res.send("Interaction successfully submitted!");
+      } catch (error) {
+         dbError(res, "");
+      }
+   } else {
+      req.status(400).send("To use this endpoint, I need a valid simulated score, user score, " +
+                           "topic, and name");
+   }
+});
+
+/**
+ * Submits the info for a users' interaction as well as the sim that was present
+ * @param {String} simScore - The simulated score of the users' Interaction
+ * @param {String} userScore - The user's score of the interaction
+ * @param {String} topic - The topic of discussion of the interaction
+ * @param {String} name - The name of the sim
+ * @param {String} user - The user's google ID
+ * @param {String} accessoryType - The sim's accessory type
+ * @param {String} hairColor - The hair color of the sim
+ * @param {String} hatColor - The hat color of the sim
+ * @param {String} facialHair - The facial hair of the sim
+ * @param {String} clothe - The clothe of the sim
+ * @param {String} clotheColor - The clothe color of the sim
+ * @param {String} skinColor - The color of skin of the sim
+ * @param {MYSQLConnection} pool - The connection pool to use for queries
+ */
+async function submitInteraction(simScore, userScore, topic, name, user, accessoryType,
+                                 hairColor, hatColor, facialHair, clothe, clotheColor,
+                                 skinColor) {
+   const submitSimQuery = "INSERT INTO sim(accessory_type, hair_color, hat_color, facial_hair, " +
+                          "clothe, clothe_color, skin_color) VALUES (?, ?, ?, ?, ?, ?, ?);";
+   const simResults = await pool.query(submitSimQuery, [accessoryType, hairColor, hatColor,
+                                                        facialHair, clothe, clotheColor, skinColor]);
+   const simId = simResults.insertId;
+
+   const submitInteractionQuery = "INSERT INTO interaction(user_id, sim_score, user_score, topic" +
+                                     ", name, sim_id) " +
+                                  "VALUES ((SELECT id FROM user WHERE google_name = ?)" +
+                                     ", ?, ?, ?, ?, ?);";
+   await pool.query(submitSimQuery, [name, sim_score, user_score, topic, name, simId]);
+}
+
 /**
  * Registers a user's google ID to the database
  * @param {String} user - The user's google ID
@@ -162,7 +213,7 @@ async function registerUser(user, pool) {
  *                    made
  */
 async function getUserHistory(user, pool) {
-   const historyQuery = "SELECT i.sim_score, i.user_score, i.date_made " +
+   const historyQuery = "SELECT (i.sim_score - i.user_score), i.date_made " +
                         "FROM user u, interaction i " +
                         "WHERE u.id = i.user_id AND u.google_name = ? " +
                         "LIMIT 20;";
