@@ -27,6 +27,20 @@
   height: 100%;
 }
 
+.gameNumbers {
+  float: right;
+  position: relative;
+  z-index: 2;
+  margin-right: 5% !important;
+}
+
+.remainingMessages {
+  float: left;
+  position: relative;
+  z-index: 2;
+  margin-left: 5% !important;
+}
+
 /* Text Input */
 .textfield {
   width: 100%;

@@ -75,8 +75,8 @@ function HistoryView() {
         </Card>
         <br />
         <Card.Group className={styles.historyCards}>
-          {tempData.map((element) => (
-            <HistoryCell element={element} />
+          {tempData.map((element, i) => (
+            <HistoryCell key={i} element={element} />
           ))}
         </Card.Group>
       </Message>
