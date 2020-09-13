@@ -3,9 +3,12 @@ import styles from "../../css/InteractionView.module.css";
 import cx from "classnames";
 import Avatar from "avataaars";
 import { Message } from "semantic-ui-react";
-import { getText } from "./empathize";
+import { getText, analyzeText } from "./empathize";
+
+import axios from 'axios';
 
 class EmpathizeView extends Component {
+
   constructor(props) {
     super(props);
 
@@ -13,6 +16,7 @@ class EmpathizeView extends Component {
       avatarGenerator: props.avatarGenerator,
       avatar: props.avatarGenerator(),
       sourceText: "",
+      title: "",
       link: "",
       inputText: "",
     };
@@ -20,35 +24,61 @@ class EmpathizeView extends Component {
     this.focus = this.focus.bind(this);
   }
 
-  componentDidMount() {
-    this.loadNewText();
-  }
+    componentDidMount() {
+        this.loadNewText();
+    }
 
-  async loadNewText() {
-    const [sourceText, link] = await getText();
-    this.setState({
-      sourceText: sourceText,
-      link: link,
-    });
-  }
+    async loadNewText() {
+        const [sourceText, title, link] = await getText();
+        this.setState({
+            sourceText: sourceText,
+            title: title,
+            link: link,
+        });
+        const data = await analyzeText(sourceText)
+        const sentiment = data["sentimentResult"];
+        const score = sentiment["documentSentiment"]["score"];
+        const magnitude = sentiment["documentSentiment"]["magnitude"];
+        console.log(data);
+        console.log(score, magnitude);
+        this.updateAvatar(score, magnitude);
+        const entitySentiment = data["entitySentimentResult"];
+    }
 
-  focus() {
-    this.myRef.current.focus();
-  }
+    updateAvatar(score, magnitude) {
+        const avatar = this.state.avatar;
+        if (score > 0.5) {
+            avatar.eyeType = "Happy";
+            avatar.eyebrowType = "RaisedExcited";
+        } else if (score < -0.5) {
+            avatar.eyeType = "EyeRoll";
+            avatar.eyebrowType = "Angry";
+        } else {
+            avatar.eyeType = "Default";
+            avatar.eyebrowType = "Default";
+        }
 
-  onTodoChange(value) {
-    this.setState({
-      inputText: value,
-    });
-  }
+        // probably going to change these magnitude values
+        if (magnitude < 10 && score > 0.5) {
+            avatar.mouthType = "Default";
+        }
+    }
+
+
+    focus() {
+        this.myRef.current.focus();
+    }
+
+    onTodoChange(value) {
+        this.setState({
+            inputText: value,
+        });
+    }
 
   handleSubmit(event) {
     event.preventDefault();
     if (this.state.message !== null && this.state.message !== "") {
       console.log("submitted");
-      this.setState({
-        inputText: "",
-      });
     }
   }
 
@@ -56,9 +86,9 @@ class EmpathizeView extends Component {
     return (
       <div className={styles.width}>
         <Message className={styles.quote}>
-          <Message.Header>
-            <h1>Changes in Service</h1>
-          </Message.Header>
+            <Message.Header>
+                <h1><a href={this.state.link}>{this.state.title}</a></h1>
+            </Message.Header>
           <p style={{ fontSize: "1.25rem" }}>{this.state.sourceText}</p>
         </Message>
         <div className={styles.window}>
@@ -105,6 +135,7 @@ class EmpathizeView extends Component {
                 type="submit"
                 disabled={this.state.inputDisabled}
                 className={cx("ui primary button", styles.sendButton)}
+                onClick={() => this.processText(this.state.inputText)}
               >
                 Send
               </button>
