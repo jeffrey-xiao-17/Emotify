@@ -20,7 +20,7 @@ function App() {
           render={() => <InteractionView generatedBot={generateBot} />}
         />
         <Route path="/results" component={ResultsView} />
-        <Route path="/history" component={HistoryView} /> */}
+        <Route path="/history" component={HistoryView} />
       </Switch>
     </Router>
   );
