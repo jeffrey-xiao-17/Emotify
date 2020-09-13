@@ -3,9 +3,7 @@ import styles from "../../css/InteractionView.module.css";
 import cx from "classnames";
 import Avatar from "avataaars";
 import { Button, Message } from "semantic-ui-react";
-import { getText } from "./empathize";
-
-import axios from 'axios';
+import { getText, analyzeText } from "./empathize";
 
 class EmpathizeView extends Component {
 
@@ -16,6 +14,7 @@ class EmpathizeView extends Component {
       avatarGenerator: props.avatarGenerator,
       avatar: props.avatarGenerator(),
       sourceText: "",
+      title: "",
       link: "",
       inputText: "",
     };
@@ -23,28 +22,30 @@ class EmpathizeView extends Component {
     this.focus = this.focus.bind(this);
   }
 
+    componentDidMount() {
+        this.loadNewText();
+    }
 
-  componentDidMount() {
-    this.loadNewText();
-  }
-
-  async loadNewText() {
-    const [sourceText, link] = await getText();
-    this.setState({
-      sourceText: sourceText,
-      link: link,
-    });
-  }
+    async loadNewText() {
+        const [sourceText, title, link] = await getText();
+        this.setState({
+            sourceText: sourceText,
+            title: title,
+            link: link,
+        });
+        const data = analyzeText(sourceText)
+        console.log(data);
+    }
 
     focus() {
         this.myRef.current.focus();
     }
 
-  onTodoChange(value) {
-    this.setState({
-      inputText: value,
-    });
-  }
+    onTodoChange(value) {
+        this.setState({
+            inputText: value,
+        });
+    }
 
   handleSubmit(event) {
     event.preventDefault();

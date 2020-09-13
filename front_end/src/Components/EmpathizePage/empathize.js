@@ -9,7 +9,7 @@ const ANALYZE_ENTITY_SENTIMENT_METHOD =
 const ACCESS_TOKEN =
   "ya29.c.Ko8B3Afv9eriAEJnvg-riokaH7tz3KKGhpxwy6sEoDTQae8Xi3PYa-iHCCAUGDZWMp8xRphOvxaoIAp7vEG50G9jU-O4hVdtUlDXyPk1GwTPOn1HClBAQXk66ZbE6a4RBJ1tc2TQfxUb22pBHnvDRZasG5nRv7OpHvpiYwRxPns1UuNfXGjPEs36LhpRcR4Dvuc";
 
-async function analyzeText(text) {
+export async function analyzeText(text) {
   const response = await axios.post('https://autismproject.uc.r.appspot.com/process', {
     text
   });
@@ -41,11 +41,7 @@ const SAMPLES = [
         Cities are nervous that business districts are devastated since no one buys coffee, lunches or walks home and steps into a shoe store or tailor, or to a bar for drinks with colleagues.
 
         But like much else in our present world, things are presented in black and white, emotive ways.`,
-    "https://news.ycombinator.com/item?id=24452280",
-    `My commute is 20 minutes on an uncrowded ferry, and my home office is a tiny desk in my daughter's bedroom while she works on the other side on school stuff.
-        My colleague has a massive house with a pool tennis court and so much space he has literally 3 never-used bedrooms. His wife looks after kids who are at school most of the day again. His commute is 2 hours each way.
-
-        People are talking home vs office people are coming from very different comparisons.`,
+    "WFH vs office",
     "https://news.ycombinator.com/item?id=24452280",
   ]
 ];
