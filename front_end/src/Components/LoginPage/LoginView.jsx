@@ -23,8 +23,8 @@ function LoginView() {
           justifyContent: "space-around",
         }}
       >
-        {avatars.map((avatar) => (
-          <IntroAvatar bot={avatar} />
+        {avatars.map((avatar, i) => (
+          <IntroAvatar key={i} bot={avatar} />
         ))}
       </div>
       <h1 className={styles.titleText}>
