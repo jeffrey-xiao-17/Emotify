@@ -96,24 +96,24 @@ const createPool = async () => {
 };
 
 let pool;
-const poolPromise = createPool()
-   .catch((err) => {
-      process.exit(1)
-   }
-);
-
-app.use(async (req, res, next) => {
-  if (pool) {
-    return next();
-  }
-  try {
-    pool = await poolPromise;
-    next();
-  }
-  catch (err) {
-    return next(err);
-  }
-});
+// const poolPromise = createPool()
+//    .catch((err) => {
+//       process.exit(1)
+//    }
+// );
+//
+// app.use(async (req, res, next) => {
+//   if (pool) {
+//     return next();
+//   }
+//   try {
+//     pool = await poolPromise;
+//     next();
+//   }
+//   catch (err) {
+//     return next(err);
+//   }
+// });
 
 
 app.get("/history", cors(), async function (req, res) {
@@ -135,7 +135,7 @@ app.get("/history", cors(), async function (req, res) {
 app.post("/register", cors(), async function (req, res) {
    if (req.body.user && req.body.user.length > 1) {
       try {
-         await registerUser(req.body.user, pool);
+         //await registerUser(req.body.user, pool);
          res.set("Content-Type", "text/plain");
          res.send("User successfully registered!");
       } catch (error) {
@@ -146,22 +146,22 @@ app.post("/register", cors(), async function (req, res) {
    }
 });
 
-app.post("/submit", cors(), async function (req, res) {
-   if (req.body.sim_score && req.body.user_score && req.body.topic && req.body.name
-      && req.body.user && req.body.sim) {
-      try {
-         await submitInteraction(req.body.sim_score, req.body.user_score, req.body.topic,
-                                 req.body.name, req.body.user, req.body.sim);
-         res.set("Content-Type", "text/plain");
-         res.send("Interaction successfully submitted!");
-      } catch (error) {
-         dbError(res, "");
-      }
-   } else {
-      req.status(400).send("To use this endpoint, I need a valid simulated score, user score, " +
-                           "topic, and name");
-   }
-});
+// app.post("/submit", cors(), async function (req, res) {
+//    if (req.body.sim_score && req.body.user_score && req.body.topic && req.body.name
+//       && req.body.user && req.body.sim) {
+//       try {
+//          await submitInteraction(req.body.sim_score, req.body.user_score, req.body.topic,
+//                                  req.body.name, req.body.user, req.body.sim);
+//          res.set("Content-Type", "text/plain");
+//          res.send("Interaction successfully submitted!");
+//       } catch (error) {
+//          dbError(res, "");
+//       }
+//    } else {
+//       req.status(400).send("To use this endpoint, I need a valid simulated score, user score, " +
+//                            "topic, and name");
+//    }
+// });
 
 /**
  * Submits the info for a users' interaction as well as the sim that was present
@@ -179,31 +179,31 @@ app.post("/submit", cors(), async function (req, res) {
  * @param {String} skinColor - The color of skin of the sim
  * @param {MYSQLConnection} pool - The connection pool to use for queries
  */
-async function submitInteraction(simScore, userScore, topic, name, user, accessoryType,
-                                 hairColor, hatColor, facialHair, clothe, clotheColor,
-                                 skinColor) {
-   const submitSimQuery = "INSERT INTO sim(accessory_type, hair_color, hat_color, facial_hair, " +
-                          "clothe, clothe_color, skin_color) VALUES (?, ?, ?, ?, ?, ?, ?);";
-   const simResults = await pool.query(submitSimQuery, [accessoryType, hairColor, hatColor,
-                                                        facialHair, clothe, clotheColor, skinColor]);
-   const simId = simResults.insertId;
-
-   const submitInteractionQuery = "INSERT INTO interaction(user_id, sim_score, user_score, topic" +
-                                     ", name, sim_id) " +
-                                  "VALUES ((SELECT id FROM user WHERE google_name = ?)" +
-                                     ", ?, ?, ?, ?, ?);";
-   await pool.query(submitSimQuery, [name, sim_score, user_score, topic, name, simId]);
-}
+// async function submitInteraction(simScore, userScore, topic, name, user, accessoryType,
+//                                  hairColor, hatColor, facialHair, clothe, clotheColor,
+//                                  skinColor) {
+//    const submitSimQuery = "INSERT INTO sim(accessory_type, hair_color, hat_color, facial_hair, " +
+//                           "clothe, clothe_color, skin_color) VALUES (?, ?, ?, ?, ?, ?, ?);";
+//    const simResults = await pool.query(submitSimQuery, [accessoryType, hairColor, hatColor,
+//                                                         facialHair, clothe, clotheColor, skinColor]);
+//    const simId = simResults.insertId;
+//
+//    const submitInteractionQuery = "INSERT INTO interaction(user_id, sim_score, user_score, topic" +
+//                                      ", name, sim_id) " +
+//                                   "VALUES ((SELECT id FROM user WHERE google_name = ?)" +
+//                                      ", ?, ?, ?, ?, ?);";
+//    await pool.query(submitSimQuery, [name, sim_score, user_score, topic, name, simId]);
+// }
 
 /**
  * Registers a user's google ID to the database
  * @param {String} user - The user's google ID
  * @param {MYSQLConnection} pool - The connection pool to use for queries
  */
-async function registerUser(user, pool) {
-   const registrationQuery = "INSERT INTO user(google_name) VALUES (?);";
-   await pool.query(registrationQuery, [user]);
-}
+// async function registerUser(user, pool) {
+//    const registrationQuery = "INSERT INTO user(google_name) VALUES (?);";
+//    await pool.query(registrationQuery, [user]);
+// }
 
 /**
  * Delivers a plain text database error message to the user
@@ -219,38 +219,6 @@ async function getUserHistory(user, pool) {
                         "LIMIT 20;";
    const userHistory = await pool.query(historyQuery, [user]);
    return userHistory;
-   // return {
-   //    average: 5,
-   //    lowest:  3,
-   //    highest: 7,
-   //    history: [
-   //       {
-   //          personal: 7,
-   //          simulated: 4,
-   //          date: "3/11/2020"
-   //       },
-   //       {
-   //          personal: 6,
-   //          simulated: 5,
-   //          date: "3/10/2020"
-   //       },
-   //       {
-   //          personal: 9,
-   //          simulated: 8,
-   //          date: "6/22/2020"
-   //       },
-   //       {
-   //          personal: 2,
-   //          simulated: 3,
-   //          date: "5/19/2020"
-   //       },
-   //       {
-   //          personal: 1,
-   //          simulated: 2,
-   //          date: "3/20/2020"
-   //       },
-   //    ]
-   // };
 }
 
 /**
