@@ -5,7 +5,10 @@ import Avatar from "avataaars";
 import { Button, Message } from "semantic-ui-react";
 import { getText } from "./empathize";
 
+import axios from 'axios';
+
 class EmpathizeView extends Component {
+
   constructor(props) {
     super(props);
 
@@ -15,10 +18,34 @@ class EmpathizeView extends Component {
       sourceText: "",
       link: "",
       inputText: "",
+      userProcess: "",
+      sourceText: ""
     };
     this.myRef = React.createRef();
     this.focus = this.focus.bind(this);
   }
+
+  makeUserProcess(text) {
+     const makeRequest = async (text) => {
+        const response = await axios.post('https://autismproject.uc.r.appspot.com/process', {
+           text
+        });
+
+        this.setState({ userProcess: response.data });
+     };
+     return makeRequest(text);
+ }
+
+ makeSourceProcess(text) {
+    const makeRequest = async (text) => {
+      const response = await axios.post('https://autismproject.uc.r.appspot.com/process', {
+          text
+      });
+
+      this.setState({ sourceProcess: response.data });
+    };
+    return makeRequest(text);
+}
 
   componentDidMount() {
     this.loadNewText();
@@ -46,9 +73,6 @@ class EmpathizeView extends Component {
     event.preventDefault();
     if (this.state.message !== null && this.state.message !== "") {
       console.log("submitted");
-      this.setState({
-        inputText: "",
-      });
     }
   }
 
@@ -105,6 +129,7 @@ class EmpathizeView extends Component {
                 type="submit"
                 disabled={this.state.inputDisabled}
                 className={cx("ui primary button", styles.sendButton)}
+                onClick={() => this.processText(this.state.inputText)}
               >
                 Send
               </button>
