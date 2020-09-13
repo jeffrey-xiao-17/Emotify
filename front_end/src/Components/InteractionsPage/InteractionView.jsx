@@ -4,7 +4,7 @@ import cx from "classnames";
 // Components
 import ChatBot from "./ChatBot";
 import { ChatFeed } from "react-bell-chat";
-import { Button, Statistic, Popup, Icon, Message } from "semantic-ui-react";
+import { Button, Statistic, Popup } from "semantic-ui-react";
 import { uniqueNamesGenerator, names } from "unique-names-generator";
 import Confetti from "react-dom-confetti";
 

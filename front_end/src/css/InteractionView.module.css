@@ -86,3 +86,18 @@
   margin: auto;
   margin-bottom: 2%;
 }
+
+.quote {
+  width: 75%;
+  text-align: center;
+  margin: auto;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+
+.inputRow {
+  width: 75%;
+  margin: auto;
+}
