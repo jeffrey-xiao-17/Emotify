@@ -3,8 +3,9 @@ import styles from "../../css/InteractionView.module.css";
 import cx from "classnames";
 import Avatar from "avataaars";
 import { Message, Button } from "semantic-ui-react";
-import { getText, analyzeText } from "./empathize";
+import { getText, analyzeText, getSourceText } from "./empathize";
 import Confetti from "react-dom-confetti";
+import * as Util from "../../utilities";
 
 import axios from "axios";
 
@@ -87,7 +88,10 @@ class EmpathizeView extends Component {
   }
 
   async loadNewText() {
-    const [sourceText, title, link] = await getText();
+    const stuff = await getSourceText();
+    const link = stuff.link;
+    const title = stuff.title;
+    const sourceText = Util.randomOption(stuff.comments);
     this.setState({
       sourceText: sourceText,
       title: title,

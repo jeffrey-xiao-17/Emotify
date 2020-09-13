@@ -17,7 +17,7 @@ async function getThreadHTML(threadID) {
 // Returns a list of thread IDs on the given page
 async function threads(pageNumber) {
     const pageHTMLText = await getPageHTML(pageNumber);
-    const dom = new jsdom.JSDOM(pageHTMLText);
+    const dom = domparser.parseFromString(pageHTMLText, "text/html");
     const table = dom.window.document.getElementById("hnmain");
 
     const threads = table.tBodies[0].rows[2].cells[0].childNodes[0].tBodies[0].rows;
@@ -35,8 +35,10 @@ async function threads(pageNumber) {
 // Returns a list of comment strings for the given thread ID
 async function comments(threadID) {
     const threadHTMLText = await getThreadHTML(threadID);
-    const dom = new jsdom.JSDOM(threadHTMLText);
+    const dom = domparser.parseFromString(threadHTMLText, "text/html");
     const table = dom.window.document.getElementById("hnmain");
+
+    const commentStrings = [];
 
     const comments = table.tBodies[0].rows[2].cells[0].childNodes[4].tBodies[0].rows;
     for (const comment of comments) {
@@ -44,11 +46,13 @@ async function comments(threadID) {
             const a = comment.cells[0].childNodes[1].tBodies[0].rows[0].cells[2].childNodes[2].childNodes;
             for (const b of a) {
                 if (b.className === "commtext c00") {
-                    console.log(b.innerHTML);
+                    const rawComment = b.textContent.replace("reply\n", "");
+                    commentStrings.push(rawComment);
                 }
             }
         }
     }
+    return commentStrings;
 }
 
 
