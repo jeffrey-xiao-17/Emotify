@@ -1,0 +1,26 @@
+{
+    "example1": {
+        "topic": "Work from home vs. work in the office",
+        "initial": "My commute is 20 minutes on an uncrowded ferry, and my home office is a tiny desk in my daughter's bedroom while she works on the other side on school stuff. My colleague has a massive house with a pool tennis court and so much space he has literally 3 never-used bedrooms. His wife looks after kids who are at school most of the day again. His commute is 2 hours each way. People are talking home vs office people are coming from very different comparisons.",
+        "bot": {
+            "eyeOption": "Default",
+            "eyebrowOption": "Default",
+            "mouthOption": "Default"
+        },
+        "outcome": {
+            "scoreBounds": [-0.25, 0.25],
+            "magnitudeBounds": [-0.25, 0.25],
+            "entities": {
+                "home": {
+                    "scoreBounds": [-0.25, 0.25],
+                    "magnitudeBounds": [-0.25, 0.25]
+                },
+                "office": {
+                    "scoreBounds": [-0.25, 0.25],
+                    "magnitudeBounds": [-0.25, 0.25]
+                }
+            }
+
+        }
+    }
+}
