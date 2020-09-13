@@ -5,17 +5,7 @@ import Avatar from "avataaars";
 
 class ChatBot extends Component {
   render() {
-    const expressions =
-      Math.abs(this.props.botSentiment - this.props.userSentiment) > 0.1
-        ? computeOptions(
-            1.5 * this.props.botSentiment + 0.5 * this.props.userSentiment
-          )
-        : {
-            eye: this.props.bot.eyeType,
-            eyebrow: this.props.bot.eyebrowType,
-            mouth: this.props.bot.mouthType,
-          };
-
+    const expressions = computeOptions(this.props.currentSentiment);
     return (
       <div className={styles.window}>
         <Avatar
@@ -23,7 +13,7 @@ class ChatBot extends Component {
           style={{
             maxHeight: "75vh",
             height: "100vh",
-            width: "100vh",
+            width: "100%",
           }}
           avatarStyle="Transparent"
           topType={this.props.bot.topType}
@@ -99,33 +89,36 @@ function computeOptions(s) {
     eyebrow: 0,
     mouth: 0,
   };
-  if (index == 0) {
-    res.eye = EYE_OPTIONS[Math.round(Math.random(1))];
-    res.eyebrow = EYEBROW_OPTIONS[Math.round(Math.random(1))];
-    res.mouth = MOUTH_OPTIONS[Math.round(Math.random(1))];
-  } else if (index == 9) {
-    res.eye = EYE_OPTIONS[9 - Math.round(Math.random(1))];
-    res.eyebrow = EYEBROW_OPTIONS[9 - Math.round(Math.random(1))];
-    res.mouth = MOUTH_OPTIONS[9 - Math.round(Math.random(1))];
-  } else {
-    res.eye =
-      EYE_OPTIONS[
-        index +
-          Math.floor(Math.random() + 0.5) *
-            (Math.floor(Math.random() * 2) == 1 ? 1 : -1)
-      ];
-    res.eyebrow =
-      EYEBROW_OPTIONS[
-        index +
-          Math.floor(Math.random() + 0.5) *
-            (Math.floor(Math.random() * 2) == 1 ? 1 : -1)
-      ];
-    res.mouth =
-      MOUTH_OPTIONS[
-        index +
-          Math.floor(Math.random() + 0.5) *
-            (Math.floor(Math.random() * 2) == 1 ? 1 : -1)
-      ];
-  }
+  // if (index == 0) {
+  //   res.eye = EYE_OPTIONS[Math.round(Math.random(1))];
+  //   res.eyebrow = EYEBROW_OPTIONS[Math.round(Math.random(1))];
+  //   res.mouth = MOUTH_OPTIONS[Math.round(Math.random(1))];
+  // } else if (index == 9) {
+  //   res.eye = EYE_OPTIONS[9 - Math.round(Math.random(1))];
+  //   res.eyebrow = EYEBROW_OPTIONS[9 - Math.round(Math.random(1))];
+  //   res.mouth = MOUTH_OPTIONS[9 - Math.round(Math.random(1))];
+  // } else {
+  //   res.eye =
+  //     EYE_OPTIONS[
+  //       index +
+  //         Math.floor(Math.random() + 0.5) *
+  //           (Math.floor(Math.random() * 2) == 1 ? 1 : -1)
+  //     ];
+  //   res.eyebrow =
+  //     EYEBROW_OPTIONS[
+  //       index +
+  //         Math.floor(Math.random() + 0.5) *
+  //           (Math.floor(Math.random() * 2) == 1 ? 1 : -1)
+  //     ];
+  //   res.mouth =
+  //     MOUTH_OPTIONS[
+  //       index +
+  //         Math.floor(Math.random() + 0.5) *
+  //           (Math.floor(Math.random() * 2) == 1 ? 1 : -1)
+  //     ];
+  // }
+  res.eye = EYE_OPTIONS[index];
+  res.eyebrow = EYEBROW_OPTIONS[index];
+  res.mouth = MOUTH_OPTIONS[index];
   return res;
 }
