@@ -17,6 +17,8 @@ CREATE TABLE interaction(
    user_id    INT NOT NULL,
    sim_score  INT NOT NULL,
    user_score INT NOT NULL,
+   topic      VARCHAR(200) NOT NULL,
+   name       VARCHAR(100) NOT NULL,
    date_made  DATE NOT NULL DEFAULT NOW(),
    FOREIGN KEY (user_id) REFERENCES user(id)
 );
