@@ -1,6 +1,8 @@
 # Emotify
 Project built during PennApps XXI. App to help kids with Autism detect sentiment and emotions during conversations.
 
+Link to video demo: [DEMO](https://youtu.be/9WZteVpljoQ)
+
 ## Inspiration
 Children diagnosed with Autism generally have a more difficult time reading facial expressions and detecting sentiment. This can trickle down to not fully understanding other people's emotions during conversations. Furthermore, it can be difficult to give an objective way of interpreting people's emotions when receiving autism therapy to help with social interactions.
 
