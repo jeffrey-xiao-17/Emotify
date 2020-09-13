@@ -18,6 +18,11 @@ export async function analyzeText(text) {
   return response.data;
 }
 
+export async function getSourceText() {
+   const response = await axios.get("/https://autismproject.uc.r.appspot.com/source");
+   return response.data;
+}
+
 // Returns some natural language text and its URL in the format
 // [sourceText, link]
 export async function getText() {
