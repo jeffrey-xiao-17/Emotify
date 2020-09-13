@@ -1,0 +1,135 @@
+Document sentiment:
+  Score: -0.5
+  Magnitude: 2.700000047683716
+Sentence: This is a complete misrepresentation of the issue.
+  Score: -0.6000000238418579
+  Magnitude: 0.6000000238418579
+Sentence: Adding namespaces to crates.io is a social problem, not a technical one, because adding them means you now must do the work of arbitrating disputes over an identity layer, which is a job unfit for part-time volunteers, which is all that crates.io has.
+  Score: -0.699999988079071
+  Magnitude: 0.699999988079071
+Sentence: The only alternative to arbitrating your own identity layer is to tie yourself to some other preexisting identity layer (e.g. GitHub, DNS), which raises questions about the notion of project ownership, the potential transfer of ownership, the immutability of the package registry, and all the while just pushes the "race to register" to a different sphere.
+  Score: -0.30000001192092896
+  Magnitude: 0.30000001192092896
+Sentence: If crates.io had full-time employees rather than only volunteers, I'd be all for paying someone to handle identity problems in exchange for the existence of namespacing.
+  Score: -0.4000000059604645
+  Magnitude: 0.4000000059604645
+Sentence: But who's going to pay for it?
+  Score: -0.5
+  Magnitude: 0.5
+  
+Name: misrepresentation
+  Type: EVENT
+  Score: -0.800000011920929
+  Magnitude: 1.7000000476837158
+  Name: identity layer
+  Type: OTHER
+  Score: -0.10000000149011612
+  Magnitude: 0.699999988079071
+Name: GitHub
+  Type: OTHER
+  Score: 0
+  Magnitude: 0.30000001192092896
+  Name: namespaces
+  Type: OTHER
+  Score: 0
+  Magnitude: 0
+  Name: issue
+  Type: OTHER
+  Score: -0.6000000238418579
+  Magnitude: 0.6000000238418579
+
+Name: problem
+  Type: OTHER
+  Score: -0.4000000059604645
+  Magnitude: 0.4000000059604645
+  Name: work
+  Type: OTHER
+  Score: 0
+  Magnitude: 0
+  Name: disputes
+Type: OTHER
+  Score: -0.30000001192092896
+  Magnitude: 0.30000001192092896
+
+Name: identity layer
+  Type: OTHER
+  Score: -0.10000000149011612
+  Magnitude: 0.699999988079071
+  Name: alternative
+  Type: OTHER
+  Score: 0
+  Magnitude: 0
+  Name: volunteers
+  Type: PERSON
+  Score: 0
+  Magnitude: 0
+
+Name: project ownership
+  Type: OTHER
+  Score: 0
+  Magnitude: 0
+  Name: ownership
+  Type: OTHER
+  Score: 0
+  Magnitude: 0
+  Name: crates.io
+  Type: OTHER
+  Score: -0.20000000298023224
+  Magnitude: 0.20000000298023224
+  
+Name: notion
+  Type: OTHER
+  Score: -0.10000000149011612
+  Magnitude: 0.10000000149011612
+  Name: transfer
+  Type: EVENT
+  Score: 0
+  Magnitude: 0
+  Name: questions
+  Type: OTHER
+  Score: -0.10000000149011612
+  Magnitude: 0.10000000149011612
+  Name: immutability
+  Type: OTHER
+  Score: 0
+  Magnitude: 0
+  Name: volunteers
+  Type: PERSON
+  Score: 0
+  Magnitude: 0
+  Name: someone
+  Type: PERSON
+  Score: 0
+  Magnitude: 0
+  Name: employees
+  Type: PERSON
+  Score: 0
+  Magnitude: 0
+  Name: namespacing
+  Type: OTHER
+  Score: 0
+  Magnitude: 0
+  Name: identity problems
+  Type: OTHER
+  Score: -0.10000000149011612
+  Magnitude: 0.10000000149011612
+  Name: exchange
+  Type: OTHER
+  Score: -0.10000000149011612
+  Magnitude: 0.10000000149011612
+  Name: existence
+  Type: OTHER
+  Score: 0
+  Magnitude: 0
+  Name: package registry
+  Type: OTHER
+  Score: 0
+  Magnitude: 0
+  Name: sphere
+  Type: OTHER
+  Score: 0
+  Magnitude: 0
+  Name: race
+  Type: EVENT
+  Score: 0
+  Magnitude: 0
