@@ -11,8 +11,6 @@ function LoginView() {
     avatars.push(randomAvatarConfiguration())
   }
 
-  console.log(avatars)
-
   return (
     <div className={styles.LoginView}>
       <div 
