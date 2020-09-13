@@ -184,18 +184,23 @@ const getHackerNews = async () => {
        allReplies[0].remove();
        allReplies = commentdom.window.document.querySelectorAll(".reply");
    }
+   const subjectTitle = commentdom.window.document.querySelector(".storylink").textContent;
    const commentList = commentdom.window.document.querySelectorAll(".commtext");
    const commentTextList = [];
    for (let i = 0; i < commentList.length; i++) {
       commentTextList.push(commentList[i].textContent);
    }
-   return commentTextList;
+   return [subjectTitle, commentTextList];
 };
 
 app.get("/source", cors(), async function (req, res) {
-   const commentList = await getHackerNews();
+   const [title, comments] = await getHackerNews();
+   const output = {
+      title,
+      comments
+   };
    res.set("Content-Type", "application/json");
-   res.status(200).json(commentList).end();
+   res.status(200).json(output).end();
 });
 
 
