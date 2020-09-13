@@ -1,3 +1,5 @@
+import { randomOption } from "./utilities";
+
 // Color options for both hats and clothes
 const COLORS = [
     "Black",
@@ -148,11 +150,6 @@ const AVATAR_OPTIONS = {
         "DarkBrown",
         "Black",
     ]
-}
-
-// Returns a random item in an array.
-function randomOption(arr) {
-    return arr[Math.floor(Math.random() * arr.length)]
 }
 
 export function randomAvatarConfiguration() {

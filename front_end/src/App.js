@@ -8,6 +8,7 @@ import InteractionView from "./Components/InteractionsPage/InteractionView";
 import ResultsView from "./Components/ResultsPage/ResultsView";
 import HistoryView from "./Components/HistoryPage/HistoryView";
 import LoginView from "./Components/LoginPage/LoginView";
+import EmpathizeView from "./Components/EmpathizePage/EmpathizeView";
 
 import { randomAvatarConfiguration } from "./Avatar";
 
@@ -17,6 +18,10 @@ function App() {
       <Nav />
       <Switch>
         <Route path="/" exact={true} component={LoginView} />
+        <Route
+          path="/empathize"
+          render={() => <EmpathizeView avatarGenerator={randomAvatarConfiguration} />}
+        />
         <Route
           path="/interaction"
           render={() => (
