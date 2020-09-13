@@ -119,9 +119,11 @@ app.use(async (req, res, next) => {
 app.get("/history", cors(), async function (req, res) {
    if (req.query.user) {
       try {
-         const userHistory = await getUserHistory(req.query.user, pool);
-         res.set("Content-Type", "application/json");
-         res.json(userHistory);
+         // const userHistory = await getUserHistory(req.query.user, pool);
+         //res.set("Content-Type", "application/json");
+         //res.json(userHistory);
+         res.set("Content-Type", "text/plain");
+         res.send("Here is your history");
       } catch (error) {
          dbError(res, "");
       }
