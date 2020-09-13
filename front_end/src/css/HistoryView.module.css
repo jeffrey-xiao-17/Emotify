@@ -12,6 +12,10 @@
   font-size: 40px;
 } */
 
+.chartCard {
+  width: 75% !important;
+}
+
 .HistoryCell {
   background-color: #ffffff;
   margin: 20px;

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "semantic-ui-css/semantic.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Nav from "./Nav";
@@ -8,40 +8,19 @@ import InteractionView from "./Components/InteractionsPage/InteractionView";
 import ResultsView from "./Components/ResultsPage/ResultsView";
 import HistoryView from "./Components/HistoryPage/HistoryView";
 import LoginView from "./Components/LoginPage/LoginView";
-import PrivateRoute from "./Components/Routing/PrivateRoute";
 
 function App() {
-  const [authed, setAuthed] = useState(true)
-
   return (
     <Router>
       <Nav />
       <Switch>
-        <Route path="/" exact component={LoginView} />
-        <Route path="/login" exact component={LoginView} />
-        <PrivateRoute
-          pathname="/interaction"
-          render={() =><InteractionView generatedBot={generateBot}/>}
-          authed={authed}
-        />
-        <PrivateRoute 
-          authed={authed} 
-          render={()=><ResultsView/>}
-          pathname="/results"
-        />
-        <PrivateRoute 
-          authed={authed} 
-          pathname="/history" 
-          render={()=><HistoryView/>}
-        />
-        {/* <Route
+        <Route path="/" exact={true} component={LoginView} />
+        <Route
           path="/interaction"
           render={() => <InteractionView generatedBot={generateBot} />}
-          authed={authed}
         />
-        <Route authed={authed} path="/results" component={ResultsView} />
-        <Route authed={authed} path="/history" component={HistoryView} /> */}
-      
+        <Route path="/results" component={ResultsView} />
+        <Route path="/history" component={HistoryView} /> */}
       </Switch>
     </Router>
   );
@@ -92,8 +71,6 @@ function generateBot() {
         Math.floor(Math.random() * Math.floor(SKIN_COLOR_OPTIONS.length))
       ],
   };
-  console.log("CONFIGUREATION");
-  console.log(configuration);
   return configuration;
 }
 

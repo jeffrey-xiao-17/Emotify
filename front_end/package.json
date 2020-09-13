@@ -8,16 +8,19 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "avataaars": "^1.2.1",
+    "chart.js": "^2.9.3",
     "classnames": "^2.2.6",
     "immutability-helper": "^3.1.1",
     "react": "^16.13.1",
     "react-bell-chat": "^1.0.23",
+    "react-chartjs-2": "^2.10.0",
     "react-dom": "^16.13.1",
     "react-google-button": "^0.7.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^1.2.1"
+    "semantic-ui-react": "^1.2.1",
+    "unique-names-generator": "^4.3.1"
   },
   "scripts": {
     "start": "react-scripts start",
