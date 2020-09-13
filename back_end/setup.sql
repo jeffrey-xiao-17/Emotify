@@ -13,18 +13,6 @@ CREATE TABLE user(
    PRIMARY KEY(id, google_name)
 );
 
-CREATE TABLE interaction(
-   user_id    INT NOT NULL,
-   sim_score  INT NOT NULL,
-   user_score INT NOT NULL,
-   topic      VARCHAR(200) NOT NULL,
-   name       VARCHAR(100) NOT NULL,
-   sim_id     INT NOT NULL,
-   date_made  DATETIME NOT NULL DEFAULT NOW(),
-   FOREIGN KEY (user_id) REFERENCES user(id),
-   FOREIGN KEY (sim_id) REFERENCES sim(id)
-);
-
 CREATE TABLE sim(
    id             INT NOT NULL AUTO_INCREMENT,
    accessory_type VARCHAR(100) NOT NULL,
@@ -38,4 +26,17 @@ CREATE TABLE sim(
    mouth_type     VARCHAR(100) NOT NULL DEFAULT "Default",
    skin_color     VARCHAR(100) NOT NULL,
    PRIMARY KEY(id)
+);
+
+
+CREATE TABLE interaction(
+   user_id    INT NOT NULL,
+   sim_score  INT NOT NULL,
+   user_score INT NOT NULL,
+   topic      VARCHAR(200) NOT NULL,
+   name       VARCHAR(100) NOT NULL,
+   sim_id     INT NOT NULL,
+   date_made  DATETIME NOT NULL DEFAULT NOW(),
+   FOREIGN KEY (user_id) REFERENCES user(id),
+   FOREIGN KEY (sim_id) REFERENCES sim(id)
 );
