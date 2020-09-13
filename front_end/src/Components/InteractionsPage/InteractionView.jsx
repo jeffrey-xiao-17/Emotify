@@ -7,6 +7,7 @@ import { ChatFeed } from "react-bell-chat";
 import { Button, Statistic, Popup } from "semantic-ui-react";
 import { uniqueNamesGenerator, names } from "unique-names-generator";
 import Confetti from "react-dom-confetti";
+import { analyzeText } from "../EmpathizePage/empathize";
 
 const config = {
   angle: 90,
@@ -71,13 +72,15 @@ class InteractionView extends Component {
     });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     if (this.state.message !== null && this.state.message !== "") {
       const justSent = this.state.message;
       const prevRemaining = this.state.messagesRemaining;
       const prevSentiment = parseFloat(this.state.currentSentiment);
-      const newSentiment = this.computeNewSentiment(prevSentiment, 0.4);
+      const nlpRes = (await analyzeText(justSent)).sentimentResult
+        .documentSentiment.score;
+      const newSentiment = this.computeNewSentiment(prevSentiment, nlpRes);
       const prevID = this.state.idCount;
       this.setState({
         message: "",
@@ -105,21 +108,21 @@ class InteractionView extends Component {
 
       if (
         newSentiment.toFixed(1) >=
-        parseFloat(this.state.targetSentiment).toFixed(1)
+          parseFloat(this.state.targetSentiment).toFixed(1) ||
+        prevRemaining === 1
       ) {
         this.setState({ inputDisabled: true });
-        console.log("WINNER");
       }
 
-      if (prevRemaining === 1) {
-        this.setState({ inputDisabled: true });
-      }
       this.focus();
     }
   }
 
   computeNewSentiment(prevSentiment, messageSentiment) {
-    var res = parseFloat(prevSentiment) + parseFloat(messageSentiment);
+    var res = parseFloat(prevSentiment);
+    var change = (parseFloat(messageSentiment) - parseFloat(prevSentiment)) / 2;
+    change = change < 0 ? Math.max(-0.5, change) : Math.min(0.5, change);
+    res += change < 0 ? Math.min(-0.1, change) : Math.max(change, 0.1);
     if (res > 1) {
       res = 1;
     } else if (res < -1) {
@@ -157,6 +160,7 @@ class InteractionView extends Component {
       idCount: 1,
       inputDisabled: false,
     });
+    this.focus();
   }
 
   render() {
@@ -201,10 +205,12 @@ class InteractionView extends Component {
               ? parseFloat(this.state.currentSentiment) >=
                 parseFloat(this.state.targetSentiment)
                 ? `Great work! You managed to bring ${this.state.authors[1].name}'s mood up to ${this.state.currentSentiment}!`
-                : `Sadly, ${this.state.authors[1].name}'s mood was still ${
+                : `Sadly, ${
+                    this.state.authors[1].name
+                  }'s mood was still ${parseFloat(
                     parseFloat(this.state.targetSentiment) -
-                    parseFloat(this.state.currentSentiment)
-                  } short from the goal.`
+                      parseFloat(this.state.currentSentiment)
+                  ).toFixed(1)} short from the goal.`
               : `With the ${this.state.messagesRemaining} messages you have remaining, 
                     try to bring ${this.state.authors[1].name}'s mood up from 
                     ${this.state.currentSentiment} to ${this.state.targetSentiment}!`}

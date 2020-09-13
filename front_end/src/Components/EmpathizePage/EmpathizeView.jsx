@@ -2,13 +2,68 @@ import React, { Component } from "react";
 import styles from "../../css/InteractionView.module.css";
 import cx from "classnames";
 import Avatar from "avataaars";
-import { Message } from "semantic-ui-react";
+import { Message, Button } from "semantic-ui-react";
 import { getText, analyzeText } from "./empathize";
+import Confetti from "react-dom-confetti";
 
-import axios from 'axios';
+import axios from "axios";
+
+const config = {
+  angle: 90,
+  spread: 360,
+  startVelocity: 85,
+  elementCount: "149",
+  dragFriction: "0.11",
+  duration: 3000,
+  stagger: 3,
+  width: "63px",
+  height: "100px",
+  perspective: "1000px",
+  colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
+};
+
+const EYE_OPTIONS = [
+  "Cry", // -1
+  "Side", // -0.8
+  "EyeRoll", // -0.6
+  "Close", // -0.4
+  "Squint", // -0.2
+  "Default", // 0
+  "WinkWacky", // 0.2
+  "Wink", // 0.4
+  "Surprised", // 0.6
+  "Happy", // 0.8
+  "Hearts", // 1
+];
+
+const EYEBROW_OPTIONS = [
+  "Angry",
+  "AngryNatural",
+  "SadConcerned",
+  "SadConcernedNatural",
+  "Default",
+  "DefaultNatural",
+  "RaisedExcited",
+  "RaisedExcitedNatural",
+  "UpDown",
+  "UpDownNatural",
+];
+
+const MOUTH_OPTIONS = [
+  "ScreamOpen",
+  "Concerned",
+  "Sad",
+  "Disbelief",
+  "Serious",
+  "Default",
+  "Eating",
+  "Twinkle",
+  "Smile",
+  "Tongue",
+];
 
 class EmpathizeView extends Component {
-
+  static THRESHOLD = 0.2;
   constructor(props) {
     super(props);
 
@@ -19,66 +74,147 @@ class EmpathizeView extends Component {
       title: "",
       link: "",
       inputText: "",
+      sourceTextSentiment: 0,
+      inputTextSentiment: 0,
+      finished: false,
     };
     this.myRef = React.createRef();
     this.focus = this.focus.bind(this);
   }
 
-    componentDidMount() {
-        this.loadNewText();
+  componentDidMount() {
+    this.loadNewText();
+  }
+
+  async loadNewText() {
+    const [sourceText, title, link] = await getText();
+    this.setState({
+      sourceText: sourceText,
+      title: title,
+      link: link,
+      sourceTextSentiment: (await analyzeText(sourceText)).sentimentResult
+        .documentSentiment.score,
+    });
+    const data = await analyzeText(sourceText);
+    const sentiment = data["sentimentResult"];
+    const score = sentiment["documentSentiment"]["score"];
+    const magnitude = sentiment["documentSentiment"]["magnitude"];
+    console.log(data);
+    console.log(score, magnitude);
+    this.updateAvatar(score, magnitude);
+    const entitySentiment = data["entitySentimentResult"];
+  }
+
+  updateAvatar(score, magnitude) {
+    const avatar = this.state.avatar;
+
+    // EYE
+    var index = -1;
+    for (var i = 0; i < EYE_OPTIONS.length; i++) {
+      if (score <= -0.9 + i * 0.2) {
+        index = i;
+        break;
+      }
+    }
+    index = index === -1 ? 9 : index;
+
+    if (magnitude < 3) {
+      index *= index < 0 ? 3.0 / 2 : 2.0 / 3;
+    } else if (magnitude > 6) {
+      index =
+        index < 0
+          ? Math.max(index * 2, 0)
+          : Math.min(index * 2, EYE_OPTIONS.length - 1);
     }
 
-    async loadNewText() {
-        const [sourceText, title, link] = await getText();
-        this.setState({
-            sourceText: sourceText,
-            title: title,
-            link: link,
-        });
-        const data = await analyzeText(sourceText)
-        const sentiment = data["sentimentResult"];
-        const score = sentiment["documentSentiment"]["score"];
-        const magnitude = sentiment["documentSentiment"]["magnitude"];
-        console.log(data);
-        console.log(score, magnitude);
-        this.updateAvatar(score, magnitude);
-        const entitySentiment = data["entitySentimentResult"];
+    avatar.eyeType = EYE_OPTIONS[index];
+
+    // EYEBROW
+    index = -1;
+    for (i = 0; i < EYEBROW_OPTIONS.length; i++) {
+      if (score <= -0.9 + i * 0.2) {
+        index = i;
+        break;
+      }
+    }
+    index = index === -1 ? 9 : index;
+
+    if (magnitude < 3) {
+      index *= index < 0 ? 3.0 / 2 : 2.0 / 3;
+    } else if (magnitude > 6) {
+      index =
+        index < 0
+          ? Math.max(index * 2, 0)
+          : Math.min(index * 2, EYEBROW_OPTIONS.length - 1);
     }
 
-    updateAvatar(score, magnitude) {
-        const avatar = this.state.avatar;
-        if (score > 0.5) {
-            avatar.eyeType = "Happy";
-            avatar.eyebrowType = "RaisedExcited";
-        } else if (score < -0.5) {
-            avatar.eyeType = "EyeRoll";
-            avatar.eyebrowType = "Angry";
-        } else {
-            avatar.eyeType = "Default";
-            avatar.eyebrowType = "Default";
-        }
+    avatar.eyebrowType = EYEBROW_OPTIONS[index];
 
-        // probably going to change these magnitude values
-        if (magnitude < 10 && score > 0.5) {
-            avatar.mouthType = "Default";
-        }
+    // MOUTH
+    index = -1;
+    for (i = 0; i < MOUTH_OPTIONS.length; i++) {
+      if (score <= -0.9 + i * 0.2) {
+        index = i;
+        break;
+      }
+    }
+    index = index === -1 ? 9 : index;
+
+    if (magnitude < 3) {
+      index *= index < 0 ? 3.0 / 2 : 2.0 / 3;
+    } else if (magnitude > 6) {
+      index =
+        index < 0
+          ? Math.max(index * 2, 0)
+          : Math.min(index * 2, MOUTH_OPTIONS.length - 1);
     }
 
+    avatar.mouthType = MOUTH_OPTIONS[index];
+  }
 
-    focus() {
-        this.myRef.current.focus();
-    }
+  focus() {
+    this.myRef.current.focus();
+  }
 
-    onTodoChange(value) {
-        this.setState({
-            inputText: value,
-        });
-    }
+  resetState() {
+    this.setState({
+      avatar: this.state.avatarGenerator(),
+      sourceText: "",
+      title: "",
+      link: "",
+      inputText: "",
+      sourceTextSentiment: 0,
+      inputTextSentiment: 0,
+      finished: false,
+    });
+    this.loadNewText();
+  }
 
-  handleSubmit(event) {
+  onTodoChange(value) {
+    this.setState({
+      inputText: value,
+    });
+  }
+
+  async handleSubmit(event) {
     event.preventDefault();
-    if (this.state.message !== null && this.state.message !== "") {
-      console.log("submitted");
+    if (this.state.inputText !== null && this.state.inputText !== "") {
+      const res = (await analyzeText(this.state.inputText)).sentimentResult
+        .documentSentiment.score;
+      if (
+        Math.abs(
+          parseFloat(res) - parseFloat(this.state.sourceTextSentiment)
+        ) <= EmpathizeView.THRESHOLD
+      ) {
+        this.setState({
+          inputTextSentiment: parseFloat(res),
+          finished: true,
+        });
+      } else {
+        this.setState({
+          inputText: "",
+        });
+      }
     }
   }
 
@@ -86,9 +222,11 @@ class EmpathizeView extends Component {
     return (
       <div className={styles.width}>
         <Message className={styles.quote}>
-            <Message.Header>
-                <h1><a href={this.state.link}>{this.state.title}</a></h1>
-            </Message.Header>
+          <Message.Header>
+            <h1>
+              <a href={this.state.link}>{this.state.title}</a>
+            </h1>
+          </Message.Header>
           <p style={{ fontSize: "1.25rem" }}>{this.state.sourceText}</p>
         </Message>
         <div className={styles.window}>
@@ -124,8 +262,8 @@ class EmpathizeView extends Component {
               <input
                 ref={this.myRef}
                 type="text"
-                disabled={this.state.inputDisabled}
-                placeholder="Enter your message here."
+                disabled={this.state.finished}
+                placeholder="Continue the script in the author's tone. Pay particular attention to the author's emotion!"
                 value={this.state.inputText}
                 onChange={(e) => this.onTodoChange(e.target.value)}
               />
@@ -133,15 +271,26 @@ class EmpathizeView extends Component {
             <div>
               <button
                 type="submit"
-                disabled={this.state.inputDisabled}
+                disabled={this.state.finished}
                 className={cx("ui primary button", styles.sendButton)}
-                onClick={() => this.processText(this.state.inputText)}
               >
                 Send
               </button>
             </div>
           </form>
+          <Button
+            positive
+            className={styles.newButton}
+            onClick={() => this.resetState()}
+          >
+            New Quote
+          </Button>
         </div>
+        <Confetti
+          active={this.state.finished}
+          config={config}
+          style={{ textAlign: "center" }}
+        />
       </div>
     );
   }
