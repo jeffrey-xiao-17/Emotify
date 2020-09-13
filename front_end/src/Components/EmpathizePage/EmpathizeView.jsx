@@ -3,7 +3,7 @@ import styles from "../../css/InteractionView.module.css";
 import cx from "classnames";
 import Avatar from "avataaars";
 import { Message } from "semantic-ui-react";
-import { getText } from "./empathize";
+import { getText, analyzeText } from "./empathize";
 
 import axios from 'axios';
 
@@ -35,9 +35,35 @@ class EmpathizeView extends Component {
             title: title,
             link: link,
         });
-        const data = analyzeText(sourceText)
+        const data = await analyzeText(sourceText)
+        const sentiment = data["sentimentResult"];
+        const score = sentiment["documentSentiment"]["score"];
+        const magnitude = sentiment["documentSentiment"]["magnitude"];
         console.log(data);
+        console.log(score, magnitude);
+        this.updateAvatar(score, magnitude);
+        const entitySentiment = data["entitySentimentResult"];
     }
+
+    updateAvatar(score, magnitude) {
+        const avatar = this.state.avatar;
+        if (score > 0.5) {
+            avatar.eyeType = "Happy";
+            avatar.eyebrowType = "RaisedExcited";
+        } else if (score < -0.5) {
+            avatar.eyeType = "EyeRoll";
+            avatar.eyebrowType = "Angry";
+        } else {
+            avatar.eyeType = "Default";
+            avatar.eyebrowType = "Default";
+        }
+
+        // probably going to change these magnitude values
+        if (magnitude < 10 && score > 0.5) {
+            avatar.mouthType = "Default";
+        }
+    }
+
 
     focus() {
         this.myRef.current.focus();
