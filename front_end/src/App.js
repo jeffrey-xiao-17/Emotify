@@ -30,7 +30,10 @@ function App() {
             <InteractionView avatarGenerator={randomAvatarConfiguration} />
           )}
         />
-        <Route path="/results" component={ResultsView} />
+        <Route
+          path="/results"
+          render={() => <ResultsView userScore={-0.4} simScore={0.7} />}
+        />
         <Route path="/history" component={HistoryView} />
       </Switch>
     </Router>
