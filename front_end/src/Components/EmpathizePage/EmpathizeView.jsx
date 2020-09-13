@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styles from "../../css/InteractionView.module.css";
 import cx from "classnames";
 import Avatar from "avataaars";
-import { Button, Message } from "semantic-ui-react";
+import { Message } from "semantic-ui-react";
 import { getText } from "./empathize";
 
 class EmpathizeView extends Component {
