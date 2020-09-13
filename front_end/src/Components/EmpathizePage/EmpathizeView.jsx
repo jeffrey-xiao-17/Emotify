@@ -110,7 +110,7 @@ class EmpathizeView extends Component {
 
     // EYEBROW
     index = -1;
-    for (var i = 0; i < EYEBROW_OPTIONS.length; i++) {
+    for (i = 0; i < EYEBROW_OPTIONS.length; i++) {
       if (score <= -0.9 + i * 0.2) {
         index = i;
         break;
@@ -131,7 +131,7 @@ class EmpathizeView extends Component {
 
     // MOUTH
     index = -1;
-    for (var i = 0; i < MOUTH_OPTIONS.length; i++) {
+    for (i = 0; i < MOUTH_OPTIONS.length; i++) {
       if (score <= -0.9 + i * 0.2) {
         index = i;
         break;
