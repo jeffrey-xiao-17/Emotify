@@ -115,25 +115,11 @@ app.use(async (req, res, next) => {
   }
 });
 
-app.get("/trial", cors(), async function (req, res) {
-   let db;
-   try {
-      pool = await createPool();
-      res.status(200).send("it works");
-   } catch (error) {
-      res.status(500).send(error);
-   }
-
-   if (db) {
-      db.end();
-   }
-});
 
 app.get("/history", cors(), async function (req, res) {
    if (req.query.user) {
-      let db;
       try {
-         const userHistory = await getUserHistory();
+         const userHistory = await getUserHistory(req.query.user, pool);
          res.set("Content-Type", "application/json");
          res.json(userHistory);
       } catch (error) {
@@ -146,9 +132,8 @@ app.get("/history", cors(), async function (req, res) {
 
 app.post("/register", cors(), async function (req, res) {
    if (req.body.user && req.body.user.length > 1) {
-      let db;
       try {
-         const num = await registerUser(req.body.user);
+         await registerUser(req.body.user, pool);
          res.set("Content-Type", "text/plain");
          res.send("User successfully registered!");
       } catch (error) {
@@ -159,48 +144,68 @@ app.post("/register", cors(), async function (req, res) {
    }
 });
 
-async function registerUser() {
-   return 1;
+/**
+ * Registers a user's google ID to the database
+ * @param {String} user - The user's google ID
+ * @param {MYSQLConnection} pool - The connection pool to use for queries
+ */
+async function registerUser(user, pool) {
+   const registrationQuery = "INSERT INTO user(google_name) VALUES (?);";
+   await pool.query(registrationQuery, [user]);
 }
 
-async function getUserHistory(user) {
-   return {
-      average: 5,
-      lowest:  3,
-      highest: 7,
-      history: [
-         {
-            personal: 7,
-            simulated: 4,
-            date: "3/11/2020"
-         },
-         {
-            personal: 6,
-            simulated: 5,
-            date: "3/10/2020"
-         },
-         {
-            personal: 9,
-            simulated: 8,
-            date: "6/22/2020"
-         },
-         {
-            personal: 2,
-            simulated: 3,
-            date: "5/19/2020"
-         },
-         {
-            personal: 1,
-            simulated: 2,
-            date: "3/20/2020"
-         },
-      ]
-   };
+/**
+ * Delivers a plain text database error message to the user
+ * @param {String} user - The user's google ID
+ * @param {MYSQLConnection} pool - The connection pool to use for queries
+ * @return {JSON[]} - Returns an array of JSON, each item being a previous interaction the user has
+ *                    made
+ */
+async function getUserHistory(user, pool) {
+   const historyQuery = "SELECT i.sim_score, i.user_score, i.date_made " +
+                        "FROM user u, interaction i " +
+                        "WHERE u.id = i.user_id AND u.google_name = ? " +
+                        "LIMIT 20;";
+   const userHistory = await pool.query(historyQuery, [user]);
+   return userHistory;
+   // return {
+   //    average: 5,
+   //    lowest:  3,
+   //    highest: 7,
+   //    history: [
+   //       {
+   //          personal: 7,
+   //          simulated: 4,
+   //          date: "3/11/2020"
+   //       },
+   //       {
+   //          personal: 6,
+   //          simulated: 5,
+   //          date: "3/10/2020"
+   //       },
+   //       {
+   //          personal: 9,
+   //          simulated: 8,
+   //          date: "6/22/2020"
+   //       },
+   //       {
+   //          personal: 2,
+   //          simulated: 3,
+   //          date: "5/19/2020"
+   //       },
+   //       {
+   //          personal: 1,
+   //          simulated: 2,
+   //          date: "3/20/2020"
+   //       },
+   //    ]
+   // };
 }
 
 /**
  * Delivers a plain text database error message to the user
  * @param {RESPONSE OBJ} res - The response object
+ * @param {String} message - The error message to display
  */
 function dbError(res, message) {
    res.set("Content-Type", "text/plain");
