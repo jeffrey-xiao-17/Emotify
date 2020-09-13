@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Nav from "./Nav";
@@ -24,7 +24,9 @@ function App() {
         />
         <Route
           path="/interaction"
-          render={() => <InteractionView avatarGenerator={randomAvatarConfiguration} />}
+          render={() => (
+            <InteractionView avatarGenerator={randomAvatarConfiguration} />
+          )}
         />
         <Route path="/results" component={ResultsView} />
         <Route path="/history" component={HistoryView} />
