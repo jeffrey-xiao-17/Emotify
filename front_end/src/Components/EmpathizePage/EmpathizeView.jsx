@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import styles from "../../css/InteractionView.module.css";
 import cx from "classnames";
 import Avatar from "avataaars";
-import { Message } from "semantic-ui-react";
+import { Message, Button } from "semantic-ui-react";
 import { getText, analyzeText } from "./empathize";
 import Confetti from "react-dom-confetti";
 
@@ -176,6 +176,20 @@ class EmpathizeView extends Component {
     this.myRef.current.focus();
   }
 
+  resetState() {
+    this.setState({
+      avatar: this.state.avatarGenerator(),
+      sourceText: "",
+      title: "",
+      link: "",
+      inputText: "",
+      sourceTextSentiment: 0,
+      inputTextSentiment: 0,
+      finished: false,
+    });
+    this.loadNewText();
+  }
+
   onTodoChange(value) {
     this.setState({
       inputText: value,
@@ -260,6 +274,13 @@ class EmpathizeView extends Component {
               </button>
             </div>
           </form>
+          <Button
+            positive
+            className={styles.newButton}
+            onClick={() => this.resetState()}
+          >
+            New Quote
+          </Button>
         </div>
         <Confetti
           active={this.state.finished}
