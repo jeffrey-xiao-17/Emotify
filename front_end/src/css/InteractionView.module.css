@@ -1,6 +1,6 @@
 .bottom {
-  position: absolute;
-  bottom: 7.5vh;
+  position: fixed;
+  bottom: 5vh;
   width: 75%;
   margin: auto;
   left: 50%;

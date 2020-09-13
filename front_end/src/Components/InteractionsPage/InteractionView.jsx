@@ -14,6 +14,7 @@ class InteractionView extends Component {
   };
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       generatedBotProps: props.generatedBot(),
       message: "",
@@ -107,8 +108,29 @@ class InteractionView extends Component {
     return "SAMPLE BOT MESSAGE";
   }
 
-  render() {
+  resetState() {
+    this.setState({
+      generatedBotProps: this.props.generatedBot(),
+      message: "",
+      messages: [],
+      authors: [
+        {
+          id: 1,
+          name: "User",
+          isTyping: false,
+        },
+        {
+          id: 2,
+          name: uniqueNamesGenerator(InteractionView.config),
+          isTyping: false,
+        },
+      ],
+      idCount: 1,
+      inputDisabled: false,
+    });
+  }
 
+  render() {
     return (
       <div className={styles.full}>
         <div className={styles.image}>
@@ -149,10 +171,14 @@ class InteractionView extends Component {
                   Send
                 </button>
               </div>
-              <Button positive className={styles.newButton}>
-                Meet Someone New!
-              </Button>
             </form>
+            <Button
+              positive
+              className={styles.newButton}
+              onClick={() => this.resetState()}
+            >
+              Meet Someone New!
+            </Button>
           </div>
         </div>
       </div>

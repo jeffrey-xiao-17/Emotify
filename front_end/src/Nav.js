@@ -44,7 +44,7 @@ class Nav extends Component {
               <Container>
                 <Link class="active item" to="/">
                   <Menu.Item as="a">
-                    <Header as="h1">EMOTIFY</Header>
+                    <Header as="h1">EM😮TIFY</Header>
                   </Menu.Item>
                 </Link>
 

@@ -8,42 +8,20 @@ import InteractionView from "./Components/InteractionsPage/InteractionView";
 import ResultsView from "./Components/ResultsPage/ResultsView";
 import HistoryView from "./Components/HistoryPage/HistoryView";
 import LoginView from "./Components/LoginPage/LoginView";
-import PrivateRoute from "./Components/Routing/PrivateRoute";
 
 function App() {
-  const [authed, setAuthed] = useState(true);
-
   return (
     <Router>
       <Nav />
-      {/* <Switch> */}
-      <Route path="/" exact={true} component={LoginView} />
-      <PrivateRoute
-        exact={true}
-        pathname="/interaction"
-        authed={authed}
-        render={() => <InteractionView generatedBot={generateBot} />}
-      />
-      <PrivateRoute
-        exact={true}
-        pathname="/results"
-        authed={authed}
-        render={() => <ResultsView />}
-      />
-      <PrivateRoute
-        exact={true}
-        pathname="/history"
-        authed={authed}
-        render={() => <HistoryView />}
-      />
-      {/* <Route
+      <Switch>
+        <Route path="/" exact={true} component={LoginView} />
+        <Route
           path="/interaction"
           render={() => <InteractionView generatedBot={generateBot} />}
-          authed={authed}
         />
-        <Route authed={authed} path="/results" component={ResultsView} />
-        <Route authed={authed} path="/history" component={HistoryView} /> */}
-      {/* </Switch> */}
+        <Route path="/results" component={ResultsView} />
+        <Route path="/history" component={HistoryView} /> */}
+      </Switch>
     </Router>
   );
 }

@@ -11,7 +11,7 @@ class ChatBot extends Component {
           // style={{ width: "100px", height: "100px" }}
           className={cx("ui image", styles.avatar)}
           style={{
-            maxWidth: "75vh",
+            // maxWidth: "75vh",
             maxHeight: "75vh",
             height: "100vh",
             width: "100vh",
