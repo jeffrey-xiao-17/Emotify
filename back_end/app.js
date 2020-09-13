@@ -144,6 +144,30 @@ app.post("/register", cors(), async function (req, res) {
    }
 });
 
+app.post("/submit", cors(), async function (req, res) {
+   if (req.body.sim_score && req.body.user_score && req.body.topic && req.body.name
+      && req.body.user) {
+      try {
+         await submitInteraction(req.body.sim_score, req.body.user_score, req.body.topic,
+                                 req.body.name, req.body.user);
+         res.set("Content-Type", "text/plain");
+         res.send("Interaction successfully submitted!");
+      } catch (error) {
+         dbError(res, "");
+      }
+   } else {
+      req.status(400).send("To use this endpoint, I need a valid simulated score, user score, " +
+                           "topic, and name");
+   }
+});
+
+async function submitInteraction(sim_score, user_score, topic, name, user) {
+   const submitQuery = "INSERT INTO interaction(user_id, sim_score, user_score, topic, name) " +
+                       "VALUES ((SELECT id FROM user WHERE google_name = ?)" +
+                       ", ?, ?, ?, ?);";
+   await pool.query(submitQuery, [name, sim_score, user_score, topic, name]);
+}
+
 /**
  * Registers a user's google ID to the database
  * @param {String} user - The user's google ID
