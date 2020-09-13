@@ -4,8 +4,23 @@ import cx from "classnames";
 import Avatar from "avataaars";
 import { Message } from "semantic-ui-react";
 import { getText, analyzeText } from "./empathize";
+import Confetti from "react-dom-confetti";
 
 import axios from "axios";
+
+const config = {
+  angle: 90,
+  spread: 360,
+  startVelocity: 85,
+  elementCount: "149",
+  dragFriction: "0.11",
+  duration: 3000,
+  stagger: 3,
+  width: "63px",
+  height: "100px",
+  perspective: "1000px",
+  colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
+};
 
 const EYE_OPTIONS = [
   "Cry", // -1
@@ -48,6 +63,7 @@ const MOUTH_OPTIONS = [
 ];
 
 class EmpathizeView extends Component {
+  static THRESHOLD = 0.2;
   constructor(props) {
     super(props);
 
@@ -58,6 +74,9 @@ class EmpathizeView extends Component {
       title: "",
       link: "",
       inputText: "",
+      sourceTextSentiment: 0,
+      inputTextSentiment: 0,
+      finished: false,
     };
     this.myRef = React.createRef();
     this.focus = this.focus.bind(this);
@@ -73,6 +92,8 @@ class EmpathizeView extends Component {
       sourceText: sourceText,
       title: title,
       link: link,
+      sourceTextSentiment: (await analyzeText(sourceText)).sentimentResult
+        .documentSentiment.score,
     });
     const data = await analyzeText(sourceText);
     const sentiment = data["sentimentResult"];
@@ -161,10 +182,21 @@ class EmpathizeView extends Component {
     });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    if (this.state.message !== null && this.state.message !== "") {
-      console.log("submitted");
+    if (this.state.inputText !== null && this.state.inputText !== "") {
+      const res = (await analyzeText(this.state.inputText)).sentimentResult
+        .documentSentiment.score;
+      if (
+        Math.abs(
+          parseFloat(res) - parseFloat(this.state.sourceTextSentiment)
+        ) <= EmpathizeView.THRESHOLD
+      ) {
+        this.setState({
+          inputTextSentiment: parseFloat(res),
+          finished: true,
+        });
+      }
     }
   }
 
@@ -212,7 +244,7 @@ class EmpathizeView extends Component {
               <input
                 ref={this.myRef}
                 type="text"
-                disabled={this.state.inputDisabled}
+                disabled={this.state.finished}
                 placeholder="Continue the script in the author's tone. Pay particular attention to the author's emotion!"
                 value={this.state.inputText}
                 onChange={(e) => this.onTodoChange(e.target.value)}
@@ -221,15 +253,19 @@ class EmpathizeView extends Component {
             <div>
               <button
                 type="submit"
-                disabled={this.state.inputDisabled}
+                disabled={this.state.finished}
                 className={cx("ui primary button", styles.sendButton)}
-                onClick={() => this.processText(this.state.inputText)}
               >
                 Send
               </button>
             </div>
           </form>
         </div>
+        <Confetti
+          active={this.state.finished}
+          config={config}
+          style={{ textAlign: "center" }}
+        />
       </div>
     );
   }

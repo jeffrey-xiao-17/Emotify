@@ -15,7 +15,6 @@ export async function analyzeText(text) {
       text,
     }
   );
-  console.log(response.data);
   return response.data;
 }
 
