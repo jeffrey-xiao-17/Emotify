@@ -56,7 +56,7 @@ class InteractionView extends Component {
       inputDisabled: false,
       currentSentiment: parseFloat(current).toFixed(1),
       targetSentiment: parseFloat(target).toFixed(1),
-      messagesRemaining: parseInt(Math.random() * 3 + 1, 10),
+      messagesRemaining: parseInt(Math.random() * 4 + 1, 10),
     };
     this.myRef = React.createRef();
     this.focus = this.focus.bind(this);
