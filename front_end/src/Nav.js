@@ -44,7 +44,7 @@ class Nav extends Component {
               <Container>
                 <Link class="active item" to="/">
                   <Menu.Item as="a">
-                    <Header as="h1">EMOTIFY</Header>
+                    <Header as="h1">EM😮TIFY</Header>
                   </Menu.Item>
                 </Link>
 
@@ -66,29 +66,6 @@ class Nav extends Component {
       </Media>
     );
   }
-
-  // render() {
-  //   return (
-  //     <div className={styles.center}>
-  //       <div class="ui large pointing secondary menu">
-  //         <div className={cx("ui container", "right item")}>
-  //           <a class="item">APP TITLE PLACEHOLDER</a>
-  //         </div>
-  //         <div class="right item">
-  // <Link to="/">
-  //   <a class="active item">Conversation</a>
-  // </Link>
-  // <Link to="/results">
-  //   <a class="item">Results</a>
-  // </Link>
-  // <Link to="/history">
-  //   <a class="item">History</a>
-  // </Link>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 }
 
 export default Nav;

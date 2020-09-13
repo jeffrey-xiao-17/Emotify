@@ -5,10 +5,16 @@ import cx from "classnames";
 import ChatBot from "./ChatBot";
 import { ChatFeed } from "react-bell-chat";
 import update from "immutability-helper";
+import { Button } from "semantic-ui-react";
+import { uniqueNamesGenerator, names } from "unique-names-generator";
 
 class InteractionView extends Component {
+  static config = {
+    dictionaries: [names],
+  };
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       generatedBotProps: props.generatedBot(),
       message: "",
@@ -21,14 +27,21 @@ class InteractionView extends Component {
         },
         {
           id: 2,
-          name: "Bot",
+          name: uniqueNamesGenerator(InteractionView.config),
           isTyping: false,
         },
       ],
       idCount: 1,
       inputDisabled: false,
     };
-    console.log(this.generatedBotProps);
+    this.myRef = React.createRef();
+    this.focus = this.focus.bind(this);
+  }
+
+  focus() {
+    // Explicitly focus the text input using the raw DOM API
+    // Note: we're accessing "current" to get the DOM node
+    this.myRef.current.focus();
   }
 
   onTodoChange(value) {
@@ -56,6 +69,7 @@ class InteractionView extends Component {
         ],
       });
       this.botResponse(this.state.idCount - 1);
+      this.focus();
     }
   }
 
@@ -80,7 +94,7 @@ class InteractionView extends Component {
           ...this.state.messages,
           {
             authorId: 2,
-            message: "SAMPLE BOT MESSAGE",
+            message: this.generateBotMessage(this.state.message),
             createdOn: new Date(),
             isSend: true,
           },
@@ -90,8 +104,33 @@ class InteractionView extends Component {
     }, 3000);
   }
 
-  render() {
+  generateBotMessage(message) {
+    return "SAMPLE BOT MESSAGE";
+  }
 
+  resetState() {
+    this.setState({
+      generatedBotProps: this.props.generatedBot(),
+      message: "",
+      messages: [],
+      authors: [
+        {
+          id: 1,
+          name: "User",
+          isTyping: false,
+        },
+        {
+          id: 2,
+          name: uniqueNamesGenerator(InteractionView.config),
+          isTyping: false,
+        },
+      ],
+      idCount: 1,
+      inputDisabled: false,
+    });
+  }
+
+  render() {
     return (
       <div className={styles.full}>
         <div className={styles.image}>
@@ -115,6 +154,7 @@ class InteractionView extends Component {
             >
               <div className={cx("ui focus input", styles.textfield)}>
                 <input
+                  ref={this.myRef}
                   type="text"
                   disabled={this.state.inputDisabled}
                   placeholder="Enter your message here."
@@ -132,6 +172,13 @@ class InteractionView extends Component {
                 </button>
               </div>
             </form>
+            <Button
+              positive
+              className={styles.newButton}
+              onClick={() => this.resetState()}
+            >
+              Meet Someone New!
+            </Button>
           </div>
         </div>
       </div>

@@ -1,27 +1,10 @@
-import {Redirect, Route} from 'react-router-dom'
-import React from 'react'
+import { Redirect, Route } from "react-router-dom";
+import React from "react";
 
-function PrivateRoute ({component: Component, pathname, authed, render=null}) {
+function PrivateRoute({ pathname, authed, render }) {
   if (!authed) {
-    return <Redirect to="/"/>
+    return <Redirect to="/" />;
   }
-
-  // if (render==null){
-  //   return (
-  //     <Route
-  //       render={() => <Component/>}
-  //       path={pathname}
-  //     />
-  //   )
-  // }
-  else {
-    return (
-      <Route
-        path={pathname}
-        render={render}
-        component={Component}
-      />
-    )
-  }
+  return <Route path={pathname} render={render} />;
 }
-  export default PrivateRoute
+export default PrivateRoute;

@@ -6,7 +6,7 @@ import GoogleButton from "react-google-button";
 function LoginView() {
   return (
     <div className={styles.LoginView}>
-      <h1 className={styles.titleText}>EMOTIFY</h1>
+      <h1 className={styles.titleText}>EM😮TIFY</h1>
       <div className={styles.buttonContainer}>
         <GoogleButton
           onClick={() => {
