@@ -58,8 +58,8 @@ class Nav extends Component {
                   <Link class="item" to="/empathize">
                     Empathize
                   </Link>
-                  <Link class="item" to="/interaction">
-                    Interaction
+                  <Link class="item" to="/moodboost">
+                    MoodBoost
                   </Link>
                   <Link className="item" to="/results">
                     Results
