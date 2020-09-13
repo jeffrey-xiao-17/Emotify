@@ -32,7 +32,7 @@ export async function getText() {
 
 const SAMPLES = [
   [
-    "I HATE GOOGLE I HATE GOOGLE SO MUCH PLEASE LET US LOSE!!!",
+    "I appreciate working from home but I still want to work in my office!!!",
     "WFH vs office",
     "https://news.ycombinator.com/item?id=24452280",
   ],
