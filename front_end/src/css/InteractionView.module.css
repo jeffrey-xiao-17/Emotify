@@ -41,6 +41,22 @@
   margin-left: 5% !important;
 }
 
+.howTo {
+  float: left;
+  position: relative;
+  z-index: 2;
+  margin-left: 5% !important;
+}
+
+.howToMessage {
+  float: left;
+  position: relative;
+  z-index: 2;
+  margin-left: 5% !important;
+  max-width: 50%;
+  text-align: center;
+}
+
 /* Text Input */
 .textfield {
   width: 100%;

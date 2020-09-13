@@ -4,9 +4,23 @@ import cx from "classnames";
 // Components
 import ChatBot from "./ChatBot";
 import { ChatFeed } from "react-bell-chat";
-import update from "immutability-helper";
-import { Button, Statistic } from "semantic-ui-react";
+import { Button, Statistic, Popup, Icon, Message } from "semantic-ui-react";
 import { uniqueNamesGenerator, names } from "unique-names-generator";
+import Confetti from "react-dom-confetti";
+
+const config = {
+  angle: 90,
+  spread: 360,
+  startVelocity: 85,
+  elementCount: "149",
+  dragFriction: "0.11",
+  duration: 3000,
+  stagger: 3,
+  width: "63px",
+  height: "100px",
+  perspective: "1000px",
+  colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
+};
 
 class InteractionView extends Component {
   static config = {
@@ -14,11 +28,10 @@ class InteractionView extends Component {
   };
   constructor(props) {
     super(props);
-    const target =
-      (Math.floor(Math.random() * 2) === 1 ? 1 : -1) * Math.random();
+    const target = Math.random();
     var current =
       (Math.floor(Math.random() * 2) === 1 ? 1 : -1) * Math.random();
-    while (Math.abs(parseFloat(current) - parseFloat(target)) < 0.4) {
+    while (parseFloat(target) - parseFloat(current) < 0.4) {
       current = (Math.floor(Math.random() * 2) === 1 ? 1 : -1) * Math.random();
     }
 
@@ -64,7 +77,7 @@ class InteractionView extends Component {
       const justSent = this.state.message;
       const prevRemaining = this.state.messagesRemaining;
       const prevSentiment = parseFloat(this.state.currentSentiment);
-      const newSentiment = this.computeNewSentiment(prevSentiment, 0.1);
+      const newSentiment = this.computeNewSentiment(prevSentiment, 0.4);
       this.setState({
         message: "",
         messages: [
@@ -89,9 +102,10 @@ class InteractionView extends Component {
       }, 500);
 
       if (
-        newSentiment.toFixed(1) ===
+        newSentiment.toFixed(1) >=
         parseFloat(this.state.targetSentiment).toFixed(1)
       ) {
+        this.setState({ inputDisabled: true });
         console.log("WINNER");
       }
 
@@ -103,7 +117,7 @@ class InteractionView extends Component {
   }
 
   computeNewSentiment(prevSentiment, messageSentiment) {
-    var res = parseFloat(prevSentiment) - parseFloat(messageSentiment);
+    var res = parseFloat(prevSentiment) + parseFloat(messageSentiment);
     if (res > 1) {
       res = 1;
     } else if (res < -1) {
@@ -113,11 +127,10 @@ class InteractionView extends Component {
   }
 
   resetState() {
-    const target =
-      (Math.floor(Math.random() * 2) === 1 ? 1 : -1) * Math.random();
+    const target = Math.random();
     var current =
       (Math.floor(Math.random() * 2) === 1 ? 1 : -1) * Math.random();
-    while (Math.abs(parseFloat(current) - parseFloat(target)) < 0.4) {
+    while (parseFloat(target) - parseFloat(current) < 0.4) {
       current = (Math.floor(Math.random() * 2) === 1 ? 1 : -1) * Math.random();
     }
     this.setState({
@@ -147,22 +160,54 @@ class InteractionView extends Component {
   render() {
     return (
       <div className={styles.full}>
-        <div className={styles.gameNumbers}>
-          <Statistic.Group>
-            <Statistic>
-              <Statistic.Value>{this.state.currentSentiment}</Statistic.Value>
-              <Statistic.Label>Current Mood</Statistic.Label>
-            </Statistic>
-            <Statistic>
-              <Statistic.Value>{this.state.targetSentiment}</Statistic.Value>
-              <Statistic.Label>Target Mood</Statistic.Label>
-            </Statistic>
-          </Statistic.Group>
-          <Statistic
-            label="Messages Remaining"
-            value={this.state.messagesRemaining}
-          />
-        </div>
+        <Popup
+          trigger={
+            <div className={styles.gameNumbers}>
+              <Statistic.Group>
+                <Statistic>
+                  <Statistic.Value>
+                    {this.state.currentSentiment}
+                  </Statistic.Value>
+                  <Statistic.Label>Current Mood</Statistic.Label>
+                </Statistic>
+                <Statistic>
+                  <Statistic.Value>
+                    {this.state.targetSentiment}
+                  </Statistic.Value>
+                  <Statistic.Label>Target Mood</Statistic.Label>
+                </Statistic>
+              </Statistic.Group>
+              <Statistic.Group>
+                <Statistic
+                  label="Messages Remaining"
+                  value={this.state.messagesRemaining}
+                />
+              </Statistic.Group>
+            </div>
+          }
+        >
+          <Popup.Header>
+            {this.state.inputDisabled
+              ? parseFloat(this.state.currentSentiment) >=
+                parseFloat(this.state.targetSentiment)
+                ? "Hooray!"
+                : "Next Time!"
+              : "Confused?"}
+          </Popup.Header>
+          <Popup.Content>
+            {this.state.inputDisabled
+              ? parseFloat(this.state.currentSentiment) >=
+                parseFloat(this.state.targetSentiment)
+                ? `Great work! You managed to bring ${this.state.authors[1].name}'s mood up to ${this.state.currentSentiment}!`
+                : `Sadly, ${this.state.authors[1].name}'s mood was still ${
+                    parseFloat(this.state.targetSentiment) -
+                    parseFloat(this.state.currentSentiment)
+                  } short from the goal.`
+              : `With the ${this.state.messagesRemaining} messages you have remaining, 
+                    try to bring ${this.state.authors[1].name}'s mood up from 
+                    ${this.state.currentSentiment} to ${this.state.targetSentiment}!`}
+          </Popup.Content>
+        </Popup>
         <div className={styles.image}>
           <ChatBot
             bot={this.state.generatedBotProps}
@@ -214,6 +259,15 @@ class InteractionView extends Component {
             </Button>
           </div>
         </div>
+        <Confetti
+          active={
+            this.state.inputDisabled &&
+            parseFloat(this.state.currentSentiment) >=
+              parseFloat(this.state.targetSentiment)
+          }
+          config={config}
+          style={{ textAlign: "center" }}
+        />
       </div>
     );
   }

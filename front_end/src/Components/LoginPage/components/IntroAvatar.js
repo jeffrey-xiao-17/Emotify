@@ -21,9 +21,9 @@ class IntroAvatar extends Component {
         <Avatar
           className={cx("ui image", styles.avatar)}
           style={{
-            maxHeight: "75vh",
-            height: "50px",
-            width: "50px",
+            maxHeight: "150vh",
+            height: "100px",
+            width: "100px",
           }}
           avatarStyle="Transparent"
           topType={this.props.bot.topType}
@@ -93,17 +93,17 @@ function computeOptions(s) {
       break;
     }
   }
-  index = index == -1 ? 9 : index;
+  index = index === -1 ? 9 : index;
   var res = {
     eye: 0,
     eyebrow: 0,
     mouth: 0,
   };
-  if (index == 0) {
+  if (index === 0) {
     res.eye = EYE_OPTIONS[Math.round(Math.random(1))];
     res.eyebrow = EYEBROW_OPTIONS[Math.round(Math.random(1))];
     res.mouth = MOUTH_OPTIONS[Math.round(Math.random(1))];
-  } else if (index == 9) {
+  } else if (index === 9) {
     res.eye = EYE_OPTIONS[9 - Math.round(Math.random(1))];
     res.eyebrow = EYEBROW_OPTIONS[9 - Math.round(Math.random(1))];
     res.mouth = MOUTH_OPTIONS[9 - Math.round(Math.random(1))];
@@ -112,19 +112,19 @@ function computeOptions(s) {
       EYE_OPTIONS[
         index +
           Math.floor(Math.random() + 0.5) *
-            (Math.floor(Math.random() * 2) == 1 ? 1 : -1)
+            (Math.floor(Math.random() * 2) === 1 ? 1 : -1)
       ];
     res.eyebrow =
       EYEBROW_OPTIONS[
         index +
           Math.floor(Math.random() + 0.5) *
-            (Math.floor(Math.random() * 2) == 1 ? 1 : -1)
+            (Math.floor(Math.random() * 2) === 1 ? 1 : -1)
       ];
     res.mouth =
       MOUTH_OPTIONS[
         index +
           Math.floor(Math.random() + 0.5) *
-            (Math.floor(Math.random() * 2) == 1 ? 1 : -1)
+            (Math.floor(Math.random() * 2) === 1 ? 1 : -1)
       ];
   }
   return res;

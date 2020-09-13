@@ -42,20 +42,26 @@ class Nav extends Component {
               style={{ border: "none" }}
             >
               <Container>
-                <Link class="active item" to="/">
-                  <Menu.Item as="a">
-                    <Header as="h1">EM😮TIFY</Header>
+                <Link className="active item" to="/">
+                  <Menu.Item>
+                    <Header as="h1">
+                      EM
+                      <span role="img" aria-label="surprised">
+                        😮
+                      </span>
+                      TIFY
+                    </Header>
                   </Menu.Item>
                 </Link>
 
                 <Menu.Item position="right">
-                  <Link class="item" to="/interaction">
+                  <Link className="item" to="/interaction">
                     Interaction
                   </Link>
-                  <Link class="item" to="/results">
+                  <Link className="item" to="/results">
                     Results
                   </Link>
-                  <Link class="item" to="/history">
+                  <Link className="item" to="/history">
                     History
                   </Link>
                 </Menu.Item>
