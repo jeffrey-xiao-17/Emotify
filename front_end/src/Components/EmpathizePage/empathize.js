@@ -19,7 +19,7 @@ export async function analyzeText(text) {
 }
 
 export async function getSourceText() {
-   const response = await axios.get("/https://autismproject.uc.r.appspot.com/source");
+   const response = await axios.get("https://autismproject.uc.r.appspot.com/source");
    return response.data;
 }
 
