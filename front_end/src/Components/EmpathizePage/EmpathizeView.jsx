@@ -59,7 +59,7 @@ class EmpathizeView extends Component {
           <Message.Header>
             <h1>Changes in Service</h1>
           </Message.Header>
-          <h3>{this.state.sourceText}</h3>
+          <p style={{ fontSize: "1.25rem" }}>{this.state.sourceText}</p>
         </Message>
         <div className={styles.window}>
           <Avatar
