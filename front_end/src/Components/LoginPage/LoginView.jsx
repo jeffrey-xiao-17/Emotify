@@ -20,7 +20,8 @@ function LoginView() {
           flexWrap: 'wrap',
           position: 'absolute',
           zIndex: -1,
-          opacity: .3
+          opacity: .3,
+          justifyContent: 'space-around',
         }}
       >
         {avatars.map(avatar => (
