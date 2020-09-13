@@ -55,7 +55,7 @@ class InteractionView extends Component {
       inputDisabled: false,
       currentSentiment: parseFloat(current).toFixed(1),
       targetSentiment: parseFloat(target).toFixed(1),
-      messagesRemaining: parseInt(Math.random() * 3 + 1, 10),
+      messagesRemaining: parseInt(Math.random() * 4 + 1, 10),
     };
     this.myRef = React.createRef();
     this.focus = this.focus.bind(this);
@@ -78,13 +78,15 @@ class InteractionView extends Component {
       const prevRemaining = this.state.messagesRemaining;
       const prevSentiment = parseFloat(this.state.currentSentiment);
       const newSentiment = this.computeNewSentiment(prevSentiment, 0.4);
+      const prevID = this.state.idCount;
       this.setState({
         message: "",
         messages: [
           ...this.state.messages,
           {
             authorId: 1,
-            id: this.state.idCount++,
+            id: prevID + 1,
+            idCount: this.state.idCount + 1,
             message: justSent,
             createdOn: new Date(),
             isSend: false,
@@ -96,7 +98,7 @@ class InteractionView extends Component {
       setTimeout(() => {
         this.setState((previousState) => ({
           messages: previousState.messages.map((m) =>
-            m.id === this.state.idCount - 1 ? { ...m, isSend: true } : m
+            m.id === prevID + 1 ? { ...m, isSend: true } : m
           ),
         }));
       }, 500);
