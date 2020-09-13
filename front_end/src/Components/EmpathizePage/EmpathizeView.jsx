@@ -18,8 +18,8 @@ class EmpathizeView extends Component {
       sourceText: "",
       link: "",
       inputText: "",
-      userProcess: "",
-      sourceText: ""
+      userProcess: {},
+      sourceProcess: {}
     };
     this.myRef = React.createRef();
     this.focus = this.focus.bind(this);
