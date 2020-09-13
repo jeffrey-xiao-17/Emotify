@@ -190,12 +190,14 @@ const getHackerNews = async () => {
    for (let i = 0; i < commentList.length; i++) {
       commentTextList.push(commentList[i].textContent);
    }
-   return [subjectTitle, commentTextList];
+   const link = `https://news.ycombinator.com/item?id=${chosenSubject}`;
+   return [subjectTitle, commentTextList, link];
 };
 
 app.get("/source", cors(), async function (req, res) {
-   const [title, comments] = await getHackerNews();
+   const [title, comments, link] = await getHackerNews();
    const output = {
+      link,
       title,
       comments
    };
