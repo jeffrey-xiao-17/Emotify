@@ -1,0 +1,33 @@
+{
+    "idiom1": {
+        "question": "Wow, we've done nothing but study all day! I'm feeling pretty good about the exam tommorow. It's getting a bit late though, what do you think we should do?",
+        "bot": {
+            "eyeOption": "Happy",
+            "eyebrowOption": "Default",
+            "mouthOption": "Default"
+        },
+        "responses": [
+            "You're driving me up the wall!",
+            "Yes, turn a blind eye.",
+            "I agree! Let's call it a day."
+        ],
+        "correctResponse": 2,
+        "explanations": [
+            {
+                "idiom": "You're driving me up the wall!",
+                "literalMeaning": "You’re driving the person up the wall in a car or you are pushing a person so hard they go up the wall.",
+                "figurativeMeaning": "Making someone infuriated and annoyed."
+            },
+            {
+                "idiom": "Turn a blind eye.",
+                "literalMeaning": "Turning an eye that you cannot see out of.",
+                "figurativeMeaning": "Even though you see something happen you pretend that you did not see it and if asked you will say that you didn’t see it."
+            },
+            {
+                "idiom": "Call it a day.",
+                "literalMeaning": "To call today a day.",
+                "figurativeMeaning": "Stop working for the day or finish what you are doing on that particular day."
+            }
+        ]
+    }
+}
