@@ -18,6 +18,11 @@ export async function analyzeText(text) {
   return response.data;
 }
 
+export async function getSourceText() {
+   const response = await axios.get("https://autismproject.uc.r.appspot.com/source");
+   return response.data;
+}
+
 // Returns some natural language text and its URL in the format
 // [sourceText, link]
 export async function getText() {
@@ -27,7 +32,7 @@ export async function getText() {
 
 const SAMPLES = [
   [
-    "I HATE GOOGLE I HATE GOOGLE SO MUCH PLEASE LET US LOSE!!!",
+    "I appreciate working from home but I still want to work in my office!!!",
     "WFH vs office",
     "https://news.ycombinator.com/item?id=24452280",
   ],
