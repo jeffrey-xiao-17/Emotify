@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Nav from "./Nav";
@@ -15,7 +15,11 @@ import { randomAvatarConfiguration } from "./Avatar";
 
 function App() {
   const [authed, setAuthed] = useState(true)
+import EmpathizeView from "./Components/EmpathizePage/EmpathizeView";
 
+import { randomAvatarConfiguration } from "./Avatar";
+
+function App() {
   return (
     <Router>
       <Nav />
@@ -27,25 +31,24 @@ function App() {
           pathname="/interaction"
           render={() =><InteractionView avatarConfiguration={randomAvatarConfiguration()}/>}
           authed={authed}
+        <Route path="/" exact={true} component={LoginView} />
+        <Route
+          path="/empathize"
+          render={() => (
+            <EmpathizeView avatarGenerator={randomAvatarConfiguration} />
+          )}
         />
-        <PrivateRoute 
-          authed={authed} 
-          render={()=><ResultsView/>}
-          pathname="/results"
+        <Route
+          path="/moodboost"
+          render={() => (
+            <InteractionView avatarGenerator={randomAvatarConfiguration} />
+          )}
         />
-        <PrivateRoute 
-          authed={authed} 
-          pathname="/history" 
-          render={()=><HistoryView/>}
+        <Route
+          path="/results"
+          render={() => <ResultsView userScore={-0.4} simScore={0.7} />}
         />
-        {/* <Route
-          path="/interaction"
-          render={() => <InteractionView generatedBot={generateBot} />}
-          authed={authed}
-        />
-        <Route authed={authed} path="/results" component={ResultsView} />
-        <Route authed={authed} path="/history" component={HistoryView} /> */}
-      
+        <Route path="/history" component={HistoryView} />
       </Switch>
     </Router>
   );

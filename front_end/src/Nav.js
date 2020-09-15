@@ -42,9 +42,15 @@ class Nav extends Component {
               style={{ border: "none" }}
             >
               <Container>
-                <Link class="active item" to="/">
-                  <Menu.Item as="a">
-                    <Header as="h1">EMOTIFY</Header>
+                <Link className="active item" to="/">
+                  <Menu.Item>
+                    <Header as="h1">
+                      EM
+                      <span role="img" aria-label="surprised">
+                        😮
+                      </span>
+                      TIFY
+                    </Header>
                   </Menu.Item>
                 </Link>
 
@@ -54,11 +60,16 @@ class Nav extends Component {
                   </Link>
                   <Link class="item" to="/interaction">
                     Interaction
+                  <Link className="item" to="/empathize">
+                    Empathize
                   </Link>
-                  <Link class="item" to="/results">
+                  <Link className="item" to="/moodboost">
+                    MoodBoost
+                  </Link>
+                  <Link className="item" to="/results">
                     Results
                   </Link>
-                  <Link class="item" to="/history">
+                  <Link className="item" to="/history">
                     History
                   </Link>
                 </Menu.Item>
@@ -69,29 +80,6 @@ class Nav extends Component {
       </Media>
     );
   }
-
-  // render() {
-  //   return (
-  //     <div className={styles.center}>
-  //       <div class="ui large pointing secondary menu">
-  //         <div className={cx("ui container", "right item")}>
-  //           <a class="item">APP TITLE PLACEHOLDER</a>
-  //         </div>
-  //         <div class="right item">
-  // <Link to="/">
-  //   <a class="active item">Conversation</a>
-  // </Link>
-  // <Link to="/results">
-  //   <a class="item">Results</a>
-  // </Link>
-  // <Link to="/history">
-  //   <a class="item">History</a>
-  // </Link>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
 }
 
 export default Nav;

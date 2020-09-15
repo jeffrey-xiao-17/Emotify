@@ -1,3 +1,5 @@
+=======
+import { randomOption } from "./utilities";
 // Color options for both hats and clothes
 const COLORS = [
     "Black",

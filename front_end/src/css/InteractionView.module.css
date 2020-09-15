@@ -1,6 +1,6 @@
 .bottom {
-  position: absolute;
-  bottom: 7.5vh;
+  position: fixed;
+  bottom: 5vh;
   width: 75%;
   margin: auto;
   left: 50%;
@@ -27,6 +27,36 @@
   height: 100%;
 }
 
+.gameNumbers {
+  float: right;
+  position: relative;
+  z-index: 2;
+  margin-right: 5% !important;
+}
+
+.remainingMessages {
+  float: left;
+  position: relative;
+  z-index: 2;
+  margin-left: 5% !important;
+}
+
+.howTo {
+  float: left;
+  position: relative;
+  z-index: 2;
+  margin-left: 5% !important;
+}
+
+.howToMessage {
+  float: left;
+  position: relative;
+  z-index: 2;
+  margin-left: 5% !important;
+  max-width: 50%;
+  text-align: center;
+}
+
 /* Text Input */
 .textfield {
   width: 100%;
@@ -41,6 +71,12 @@
 
 .sendButton {
   margin-left: 10px !important;
+  height: 100%;
+}
+
+.newButton {
+  margin-left: 10px !important;
+  float: right;
 }
 
 /* Response History */
@@ -49,4 +85,19 @@
   overflow-y: hidden;
   margin: auto;
   margin-bottom: 2%;
+}
+
+.quote {
+  width: 75%;
+  text-align: center;
+  margin: auto;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+
+.inputRow {
+  width: 75%;
+  margin: auto;
 }
