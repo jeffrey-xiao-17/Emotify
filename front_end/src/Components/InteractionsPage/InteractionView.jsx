@@ -37,6 +37,7 @@ class InteractionView extends Component {
     }
 
     this.state = {
+      avatarConfigurationProps: props.avatarConfiguration,
       generatedBotProps: props.avatarGenerator(),
       message: "",
       messages: [],
@@ -217,12 +218,12 @@ class InteractionView extends Component {
           </Popup.Content>
         </Popup>
         <div className={styles.image}>
+          <ChatBot bot={this.state.avatarConfigurationProps} />
           <ChatBot
             bot={this.state.generatedBotProps}
             currentSentiment={this.state.currentSentiment}
           />
         </div>
-
         <div className={styles.bottom}>
           <ChatFeed
             messages={this.state.messages}

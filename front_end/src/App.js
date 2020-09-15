@@ -8,6 +8,13 @@ import InteractionView from "./Components/InteractionsPage/InteractionView";
 import ResultsView from "./Components/ResultsPage/ResultsView";
 import HistoryView from "./Components/HistoryPage/HistoryView";
 import LoginView from "./Components/LoginPage/LoginView";
+import IdiomsView from "./Components/IdiomsPage/IdiomsView";
+import PrivateRoute from "./Components/Routing/PrivateRoute";
+
+import { randomAvatarConfiguration } from "./Avatar";
+
+function App() {
+  const [authed, setAuthed] = useState(true)
 import EmpathizeView from "./Components/EmpathizePage/EmpathizeView";
 
 import { randomAvatarConfiguration } from "./Avatar";
@@ -17,6 +24,13 @@ function App() {
     <Router>
       <Nav />
       <Switch>
+        <Route path="/" exact component={LoginView} />
+        <Route path="/login" exact component={LoginView} />
+        <Route path="/idioms" exact component={IdiomsView} />
+        <PrivateRoute
+          pathname="/interaction"
+          render={() =><InteractionView avatarConfiguration={randomAvatarConfiguration()}/>}
+          authed={authed}
         <Route path="/" exact={true} component={LoginView} />
         <Route
           path="/empathize"

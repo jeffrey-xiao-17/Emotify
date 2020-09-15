@@ -55,6 +55,11 @@ class Nav extends Component {
                 </Link>
 
                 <Menu.Item position="right">
+                  <Link class="item" to="/idioms">
+                    Idioms
+                  </Link>
+                  <Link class="item" to="/interaction">
+                    Interaction
                   <Link className="item" to="/empathize">
                     Empathize
                   </Link>

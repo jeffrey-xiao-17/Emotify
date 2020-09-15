@@ -1,5 +1,5 @@
+=======
 import { randomOption } from "./utilities";
-
 // Color options for both hats and clothes
 const COLORS = [
     "Black",
@@ -152,6 +152,18 @@ const AVATAR_OPTIONS = {
     ]
 }
 
+// Returns a random item in an array.
+function randomOption(arr) {
+    return arr[Math.floor(Math.random() * arr.length)]
+}
+
+const objectMap = (obj, fn) =>
+  Object.fromEntries(
+    Object.entries(obj).map(
+      ([k, v], i) => [k, fn(v, k, i)]
+    )
+)
+  
 export function randomAvatarConfiguration() {
     const configuration = {};
     for (const type in AVATAR_OPTIONS) {
