@@ -36,9 +36,11 @@ class InteractionView extends Component {
       current = (Math.floor(Math.random() * 2) === 1 ? 1 : -1) * Math.random();
     }
 
+    var avatar = props.avatarConfiguration();
+
     this.state = {
       avatarConfigurationProps: props.avatarConfiguration,
-      generatedBotProps: props.avatarGenerator(),
+      generatedBotProps: props.avatarGenerator,
       message: "",
       messages: [],
       authors: [

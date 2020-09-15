@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { createMedia } from "@artsy/fresnel";
 import { Link } from "react-router-dom";
-// import PropTypes from "prop-types";
 import {
   Header,
   Container,
@@ -60,6 +59,7 @@ class Nav extends Component {
                   </Link>
                   <Link class="item" to="/interaction">
                     Interaction
+                  </Link>
                   <Link className="item" to="/empathize">
                     Empathize
                   </Link>

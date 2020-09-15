@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "semantic-ui-css/semantic.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Nav from "./Nav";
@@ -12,14 +12,11 @@ import IdiomsView from "./Components/IdiomsPage/IdiomsView";
 import PrivateRoute from "./Components/Routing/PrivateRoute";
 
 import { randomAvatarConfiguration } from "./Avatar";
-
-function App() {
-  const [authed, setAuthed] = useState(true)
 import EmpathizeView from "./Components/EmpathizePage/EmpathizeView";
 
-import { randomAvatarConfiguration } from "./Avatar";
-
 function App() {
+  const [authed, setAuthed] = useState(true);
+
   return (
     <Router>
       <Nav />
@@ -27,10 +24,13 @@ function App() {
         <Route path="/" exact component={LoginView} />
         <Route path="/login" exact component={LoginView} />
         <Route path="/idioms" exact component={IdiomsView} />
-        <PrivateRoute
+        <Route
           pathname="/interaction"
-          render={() =><InteractionView avatarConfiguration={randomAvatarConfiguration()}/>}
+          render={() => (
+            <InteractionView avatarConfiguration={randomAvatarConfiguration} />
+          )}
           authed={authed}
+        />
         <Route path="/" exact={true} component={LoginView} />
         <Route
           path="/empathize"
